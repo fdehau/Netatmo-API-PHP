@@ -16,5 +16,8 @@ abstract class Response
         $this->timestamp = $ts;
     }
 
-    abstract public function fromArray();
+    public static function fromArray(array $array, array $options)
+    {
+        return new self();
+    }
 }

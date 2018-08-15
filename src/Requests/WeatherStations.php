@@ -49,13 +49,19 @@ class WeatherStations implements Request
         ];
     }
 
+    public function getResponseClass()
+    {
+        return null;
+    }
+
+    public function getResponseOptions()
+    {
+        return [];
+    }
+
     public function withAuthorization()
     {
         return true;
     }
 
-    public function getResponseClass()
-    {
-        return null;
-    }
 }

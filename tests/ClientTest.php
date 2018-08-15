@@ -19,7 +19,7 @@ class ClientTest extends TestCase
     {
         $oauth2Config = new OAuth2\Config("id", "secret");
         $client = new Client($oauth2Config);
-        $httpClient = new Fixtures\Client([
+        $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\NoBody(400)
         ]);
         $client->setHttpClient($httpClient);
@@ -34,7 +34,7 @@ class ClientTest extends TestCase
     {
         $oauth2Config = new OAuth2\Config("id", "secret");
         $client = new Client($oauth2Config);
-        $httpClient = new Fixtures\Client([
+        $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\Json(400, "{")
         ]);
         $client->setHttpClient($httpClient);
@@ -49,7 +49,7 @@ class ClientTest extends TestCase
     {
         $oauth2Config = new OAuth2\Config("id", "secret");
         $client = new Client($oauth2Config);
-        $httpClient = new Fixtures\Client([
+        $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\OAuth2\Error(400, "invalid_token")
         ]);
         $client->setHttpClient($httpClient);
@@ -67,7 +67,7 @@ class ClientTest extends TestCase
             'refresh_token' => '000|refresh',
             'scope' => 'read_thermostat write_thermostat',
         ]);
-        $httpClient = new Fixtures\Client([
+        $httpClient = new Fixtures\Http\Client([
             Fixtures\Responses\OAuth2\Tokens::fromTokens($tokens)
         ]);
         $client->setHttpClient($httpClient);
@@ -86,7 +86,7 @@ class ClientTest extends TestCase
             'refresh_token' => '000|refresh',
             'scope' => 'read_thermostat write_thermostat',
         ]);
-        $httpClient = new Fixtures\Client([
+        $httpClient = new Fixtures\Http\Client([
             Fixtures\Responses\OAuth2\Tokens::fromTokens($tokens)
         ]);
         $client->setHttpClient($httpClient);
@@ -103,7 +103,7 @@ class ClientTest extends TestCase
     {
         $oauth2Config = new OAuth2\Config("id", "secret");
         $client = new Client($oauth2Config);
-        $httpClient = new Fixtures\Client([
+        $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\Json(400, "")
         ]);
         $client->setHttpClient($httpClient);
@@ -121,7 +121,7 @@ class ClientTest extends TestCase
     {
         $oauth2Config = new OAuth2\Config("id", "secret");
         $client = new Client($oauth2Config);
-        $httpClient = new Fixtures\Client([
+        $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\Json(
                 400,
                 [
@@ -151,7 +151,7 @@ class ClientTest extends TestCase
             'refresh_token' => '111|refresh',
             'scope' => 'read_thermostat write_thermostat',
         ]);
-        $httpClient = new Fixtures\Client([
+        $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\Json(
                 400,
                 [
@@ -197,7 +197,7 @@ class ClientTest extends TestCase
             'refresh_token' => '111|refresh',
             'scope' => 'read_thermostat write_thermostat',
         ]);
-        $httpClient = new Fixtures\Client([
+        $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\Json(
                 400,
                 [

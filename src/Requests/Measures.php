@@ -28,7 +28,7 @@ class Measures implements Request
         $this->end = null;
         $this->scale = null;
         $this->limit = null;
-        $this->optimize = false;
+        $this->optimize = true;
         $this->withTimeOffset = null;
     }
 
@@ -72,9 +72,9 @@ class Measures implements Request
         return $this;
     }
 
-    public function optimize()
+    public function withoutOptimization()
     {
-        $this->optimize = true;
+        $this->optimize = false;
         return $this;
     }
 
@@ -128,6 +128,20 @@ class Measures implements Request
         if ($this->withTimeOffset !== null) {
             $params["real_time"] = $this->withTimeOffset;
         }
+        return $params;
+    }
+
+    public function getResponseClass()
+    {
+        return \Netatmo\Responses\Measures::class;
+    }
+
+    public function getResponseOptions()
+    {
+        return [
+            "optimize" => $this->optimize,
+            "types" => $this->types,
+        ];
     }
 
     public function withAuthorization()

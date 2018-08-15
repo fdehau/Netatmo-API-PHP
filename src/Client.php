@@ -163,10 +163,14 @@ class Client
             if ($responseClass === null) {
                 return $body;
             } else {
-                $response = call_user_func_array([$responseClass, "fromArray"], [$result]);
+                $response = call_user_func_array(
+                    [$responseClass, "fromArray"],
+                    [$result, $request->getResponseOptions()]
+                );
                 if (isset($body['time_server'])) {
                     $response->setTimestamp($body['time_server']);
                 }
+                return $response;
             }
         } else {
             $result = isset($body['body']) ? $body['body'] : [];
