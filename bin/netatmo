@@ -1,0 +1,10 @@
+<?php
+
+require_once __DIR__ . "/../vendor/autoload.php";
+
+use Symfony\Component\Console\Application;
+use Netatmo\Commands;
+
+$application = new Application();
+$application->add(new Commands\GetTokens());
+$application->run();
