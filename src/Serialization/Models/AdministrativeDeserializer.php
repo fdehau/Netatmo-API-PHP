@@ -1,10 +1,10 @@
 <?php
 
-namespace Netatmo\Serialization\Models;
+namespace Netatmo\Sdk\Serialization\Models;
 
-use Netatmo\Responses;
-use Netatmo\Serialization;
-use Netatmo\Models;
+use Netatmo\Sdk\Responses;
+use Netatmo\Sdk\Serialization;
+use Netatmo\Sdk\Models;
 
 class AdministrativeDeserializer implements Serialization\ArrayDeserializer
 {
@@ -20,32 +20,25 @@ class AdministrativeDeserializer implements Serialization\ArrayDeserializer
     {
         $administrative = new Models\Administrative();
 
-        if (isset($array[self::LANG]))
-        {
+        if (isset($array[self::LANG])) {
             $administrative->setLang($array[self::LANG]);
         }
-        if (isset($array[self::LOCALE]))
-        {
+        if (isset($array[self::LOCALE])) {
             $administrative->setLocale($array[self::LOCALE]);
         }
-        if (isset($array[self::COUNTRY]))
-        {
+        if (isset($array[self::COUNTRY])) {
             $administrative->setCountry($array[self::COUNTRY]);
         }
-        if (isset($array[self::UNIT]))
-        {
+        if (isset($array[self::UNIT])) {
             $administrative->setUnit($array[self::UNIT]);
         }
-        if (isset($array[self::WIND_UNIT]))
-        {
+        if (isset($array[self::WIND_UNIT])) {
             $administrative->setWindUnit($array[self::WIND_UNIT]);
         }
-        if (isset($array[self::PRESSURE_UNIT]))
-        {
+        if (isset($array[self::PRESSURE_UNIT])) {
             $administrative->setWindUnit($array[self::PRESSURE_UNIT]);
         }
-        if (isset($array[self::FEEL_LIKE_ALGO]))
-        {
+        if (isset($array[self::FEEL_LIKE_ALGO])) {
             $administrative->setFeelLikeAlgo($array[self::FEEL_LIKE_ALGO]);
         }
 

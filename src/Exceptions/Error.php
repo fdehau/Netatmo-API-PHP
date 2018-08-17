@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\Exceptions;
+namespace Netatmo\Sdk\Exceptions;
 
 class Error extends \Exception
 {

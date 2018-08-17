@@ -1,8 +1,8 @@
 <?php
 
-namespace Netatmo\OAuth2\Grants;
+namespace Netatmo\Sdk\OAuth2\Grants;
 
-use Netatmo\OAuth2\Token;
+use Netatmo\Sdk\OAuth2\Token;
 
 class RefreshToken implements Grant
 {
@@ -23,7 +23,7 @@ class RefreshToken implements Grant
         return "refresh_token";
     }
 
-    public function toArray()
+    public function getParams()
     {
         return [
             "refresh_token" => $this->token,

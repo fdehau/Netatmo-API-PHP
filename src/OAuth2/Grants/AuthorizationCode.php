@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\OAuth2\Grants;
+namespace Netatmo\Sdk\OAuth2\Grants;
 
 class AuthorizationCode implements Grant
 {
@@ -21,7 +21,7 @@ class AuthorizationCode implements Grant
         return "code";
     }
 
-    public function toArray()
+    public function getParams()
     {
         return [
             "code" => $this->code,

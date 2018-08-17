@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\Serialization;
+namespace Netatmo\Sdk\Serialization;
 
 interface ArrayDeserializer
 {

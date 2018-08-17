@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\Exceptions;
+namespace Netatmo\Sdk\Exceptions;
 
 class OAuth2Error extends \Exception
 {

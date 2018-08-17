@@ -1,19 +1,19 @@
 <?php
 
-namespace Netatmo\Tests;
+namespace Netatmo\Sdk\Tests;
 
-use Netatmo\Client;
-use Netatmo\Http;
-use Netatmo\OAuth2;
-use Netatmo\ErrorCode;
-use Netatmo\Requests;
-use Netatmo\Tests\Fixtures;
+use Netatmo\Sdk\Client;
+use Netatmo\Sdk\Http;
+use Netatmo\Sdk\OAuth2;
+use Netatmo\Sdk\ErrorCode;
+use Netatmo\Sdk\Requests;
+use Netatmo\Sdk\Tests\Fixtures;
 use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
     /**
-     * @expectedException \Netatmo\Exceptions\Error
+     * @expectedException \Netatmo\Sdk\Exceptions\Error
      */
     public function testGetTokensFailWithNoBody()
     {
@@ -28,7 +28,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @expectedException \Netatmo\Exceptions\Error
+     * @expectedException \Netatmo\Sdk\Exceptions\Error
      */
     public function testGetTokensFailWithInvalidJson()
     {
@@ -43,7 +43,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @expectedException \Netatmo\Exceptions\OAuth2Error
+     * @expectedException \Netatmo\Sdk\Exceptions\OAuth2Error
      */
     public function testGetTokensFailWithOAuth2Error()
     {
@@ -96,7 +96,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @expectedException \Netatmo\Exceptions\Error
+     * @expectedException \Netatmo\Sdk\Exceptions\Error
      * @expectedExceptionMessage invalid json
      */
     public function testThrowExceptionIfResponseHasNoBody()
@@ -113,8 +113,8 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @expectedException \Netatmo\Exceptions\ApiError
-     * @expectedExceptionCode \Netatmo\ErrorCode::INVALID_ARG
+     * @expectedException \Netatmo\Sdk\Exceptions\ApiError
+     * @expectedExceptionCode \Netatmo\Sdk\ErrorCode::INVALID_ARG
      * @expectedExceptionMessage invalid argument
      */
     public function testThrowExceptionIfRequestFails()
@@ -184,7 +184,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @expectedException \Netatmo\Exceptions\OAuth2Error
+     * @expectedException \Netatmo\Sdk\Exceptions\OAuth2Error
      * @expectedExceptionCode 400
      */
     public function testRetryIfAccessTokenIsExpiredAndFailToGetNewAccessToken()

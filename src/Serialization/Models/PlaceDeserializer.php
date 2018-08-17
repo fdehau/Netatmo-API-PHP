@@ -1,10 +1,10 @@
 <?php
 
-namespace Netatmo\Serialization\Models;
+namespace Netatmo\Sdk\Serialization\Models;
 
-use Netatmo\Exceptions;
-use Netatmo\Serialization;
-use Netatmo\Models;
+use Netatmo\Sdk\Exceptions;
+use Netatmo\Sdk\Serialization;
+use Netatmo\Sdk\Models;
 
 class PlaceDeserializer implements Serialization\ArrayDeserializer
 {
@@ -17,24 +17,19 @@ class PlaceDeserializer implements Serialization\ArrayDeserializer
     public function fromArray(array $array)
     {
         $place = new Models\Place();
-        if (isset($array[self::ALTITUDE]))
-        {
+        if (isset($array[self::ALTITUDE])) {
             $place->setAltitude($array[self::ALTITUDE]);
         }
-        if (isset($array[self::CITY]))
-        {
+        if (isset($array[self::CITY])) {
             $place->setCity($array[self::CITY]);
         }
-        if (isset($array[self::COUNTRY]))
-        {
+        if (isset($array[self::COUNTRY])) {
             $place->setCountry($array[self::COUNTRY]);
         }
-        if (isset($array[self::TIMEZONE]))
-        {
+        if (isset($array[self::TIMEZONE])) {
             $place->setTimezone($array[self::TIMEZONE]);
         }
-        if (isset($array[self::LOCATION]))
-        {
+        if (isset($array[self::LOCATION])) {
             $place->setLongitude($array[self::LOCATION][0]);
             $place->setLatitude($array[self::LOCATION][1]);
         }

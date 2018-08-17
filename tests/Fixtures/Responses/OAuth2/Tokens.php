@@ -1,9 +1,9 @@
 <?php
 
-namespace Netatmo\Tests\Fixtures\Responses\OAuth2;
+namespace Netatmo\Sdk\Tests\Fixtures\Responses\OAuth2;
 
-use Netatmo\Tests\Fixtures\Responses;
-use Netatmo\OAuth2;
+use Netatmo\Sdk\Tests\Fixtures\Responses;
+use Netatmo\Sdk\OAuth2;
 
 class Tokens extends Responses\Json
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Netatmo\Tests\Requests;
+namespace Netatmo\Sdk\Tests\Requests;
 
-use Netatmo\Client;
-use Netatmo\Requests;
-use Netatmo\Responses;
-use Netatmo\Tests\Fixtures;
+use Netatmo\Sdk\Client;
+use Netatmo\Sdk\Requests;
+use Netatmo\Sdk\Responses;
+use Netatmo\Sdk\Tests\Fixtures;
 use PHPUnit\Framework\TestCase;
 
 class MeasuresTest extends TestCase

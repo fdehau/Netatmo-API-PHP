@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\OAuth2\Grants;
+namespace Netatmo\Sdk\OAuth2\Grants;
 
 class Password implements Grant
 {
@@ -28,7 +28,7 @@ class Password implements Grant
         return "password";
     }
 
-    public function toArray()
+    public function getParams()
     {
         return [
             "username" => $this->username,

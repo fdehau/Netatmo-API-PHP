@@ -1,8 +1,8 @@
 <?php
 
-namespace Netatmo\Responses;
+namespace Netatmo\Sdk\Responses;
 
-use Netatmo\Models;
+use Netatmo\Sdk\Models;
 
 class WeatherStations extends Response
 {

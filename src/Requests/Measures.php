@@ -1,11 +1,11 @@
 <?php
 
-namespace Netatmo\Requests;
+namespace Netatmo\Sdk\Requests;
 
-use Netatmo\Api;
-use Netatmo\Http;
-use Netatmo\Exceptions;
-use Netatmo\Serialization;
+use Netatmo\Sdk\Api;
+use Netatmo\Sdk\Http;
+use Netatmo\Sdk\Exceptions;
+use Netatmo\Sdk\Serialization;
 
 /**
  * ```php

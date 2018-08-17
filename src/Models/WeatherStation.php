@@ -1,8 +1,8 @@
 <?php
 
-namespace Netatmo\Models;
+namespace Netatmo\Sdk\Models;
 
-use Netatmo\Exceptions;
+use Netatmo\Sdk\Exceptions;
 
 class WeatherStation
 {

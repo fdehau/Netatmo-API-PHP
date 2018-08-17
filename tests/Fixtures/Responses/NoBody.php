@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\Tests\Fixtures\Responses;
+namespace Netatmo\Sdk\Tests\Fixtures\Responses;
 
 use GuzzleHttp\Psr7\Response;
 

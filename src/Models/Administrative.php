@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\Models;
+namespace Netatmo\Sdk\Models;
 
 class Administrative
 {

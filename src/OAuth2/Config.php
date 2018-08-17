@@ -1,8 +1,8 @@
 <?php
 
-namespace Netatmo\OAuth2;
+namespace Netatmo\Sdk\OAuth2;
 
-use Netatmo\Api;
+use Netatmo\Sdk\Api;
 
 class Config
 {
@@ -123,7 +123,7 @@ class Config
                 "scope" => $scope,
                 "grant_type" => $grant->getType()
             ],
-            $grant->toArray()
+            $grant->getParams()
         );
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo;
+namespace Netatmo\Sdk;
 
 class Client
 {

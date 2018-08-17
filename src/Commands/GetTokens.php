@@ -1,15 +1,15 @@
 <?php
 
-namespace Netatmo\Commands;
+namespace Netatmo\Sdk\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 
-use Netatmo\Client;
-use Netatmo\OAuth2;
-use Netatmo\Exceptions;
+use Netatmo\Sdk\Client;
+use Netatmo\Sdk\OAuth2;
+use Netatmo\Sdk\Exceptions;
 
 class GetTokens extends Command
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Netatmo\OAuth2\Grants;
+namespace Netatmo\Sdk\OAuth2\Grants;
 
-use Netatmo\Encoding;
-
-interface Grant extends Encoding\ArraySerializable
+interface Grant
 {
     public function getType();
+
+    public function getParams();
 }

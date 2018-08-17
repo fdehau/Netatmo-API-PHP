@@ -1,8 +1,8 @@
 <?php
 
-namespace Netatmo\Tests\Fixtures\Http;
+namespace Netatmo\Sdk\Tests\Fixtures\Http;
 
-use Netatmo\Http;
+use Netatmo\Sdk\Http;
 use GuzzleHttp;
 use Psr\Http\Message\RequestInterface;
 

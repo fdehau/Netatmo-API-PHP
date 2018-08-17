@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\Http;
+namespace Netatmo\Sdk\Http;
 
 class Method
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\Responses;
+namespace Netatmo\Sdk\Responses;
 
 class Response
 {

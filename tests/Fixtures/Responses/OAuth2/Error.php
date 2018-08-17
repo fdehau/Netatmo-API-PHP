@@ -1,8 +1,8 @@
 <?php
 
-namespace Netatmo\Tests\Fixtures\Responses\OAuth2;
+namespace Netatmo\Sdk\Tests\Fixtures\Responses\OAuth2;
 
-use Netatmo\Tests\Fixtures\Responses;
+use Netatmo\Sdk\Tests\Fixtures\Responses;
 
 class Error extends Responses\Json
 {

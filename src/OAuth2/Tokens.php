@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\OAuth2;
+namespace Netatmo\Sdk\OAuth2;
 
 class Tokens
 {

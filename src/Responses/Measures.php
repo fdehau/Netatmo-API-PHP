@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\Responses;
+namespace Netatmo\Sdk\Responses;
 
 class Measures extends Response
 {
@@ -8,8 +8,7 @@ class Measures extends Response
 
     public function pushMeasure($type, $ts, $value)
     {
-        if (!isset($this->measures[$type]))
-        {
+        if (!isset($this->measures[$type])) {
             $this->measures[$type] = [];
         }
         $this->measures[$type][$ts] = $value;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Netatmo\Serialization\Responses;
+namespace Netatmo\Sdk\Serialization\Responses;
 
-use Netatmo\Responses;
-use Netatmo\Serialization;
+use Netatmo\Sdk\Responses;
+use Netatmo\Sdk\Serialization;
 
 class MeasuresDeserializer implements Serialization\ArrayDeserializer
 {

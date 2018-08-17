@@ -1,10 +1,10 @@
 <?php
 
-namespace Netatmo\Serialization\Models;
+namespace Netatmo\Sdk\Serialization\Models;
 
-use Netatmo\Exceptions;
-use Netatmo\Serialization;
-use Netatmo\Models;
+use Netatmo\Sdk\Exceptions;
+use Netatmo\Sdk\Serialization;
+use Netatmo\Sdk\Models;
 
 class UserDeserializer implements Serialization\ArrayDeserializer
 {
@@ -13,14 +13,12 @@ class UserDeserializer implements Serialization\ArrayDeserializer
 
     public function fromArray(array $array)
     {
-        if (!isset($array[self::EMAIL]))
-        {
+        if (!isset($array[self::EMAIL])) {
             throw new Exceptions\Error("Missing mail inside user");
         }
         $user = new Models\User($array[self::EMAIL]);
 
-        if (isset($array[self::ADMINISTRATIVE]))
-        {
+        if (isset($array[self::ADMINISTRATIVE])) {
             $de = new AdministrativeDeserializer();
             $administrative = $de->fromArray($array[self::ADMINISTRATIVE]);
             $user->setAdministrative($administrative);

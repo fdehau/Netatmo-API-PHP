@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\OAuth2\Responses;
+namespace Netatmo\Sdk\OAuth2\Responses;
 
 class Error
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\Requests;
+namespace Netatmo\Sdk\Requests;
 
 class RainMeasures extends Measures
 {
