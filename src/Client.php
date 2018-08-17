@@ -159,13 +159,13 @@ class Client
         }
         if ($status === 200) {
             $result = isset($body['body']) ? $body['body'] : [];
-            $responseClass = $request->getResponseClass();
-            if ($responseClass === null) {
+            $deserializer = $request->getResponseDeserializer();
+            if ($deserializer === null) {
                 return $body;
             } else {
                 $response = call_user_func_array(
-                    [$responseClass, "fromArray"],
-                    [$result, $request->getResponseOptions()]
+                    [$deserializer, "fromArray"],
+                    [$result]
                 );
                 if (isset($body['time_server'])) {
                     $response->setTimestamp($body['time_server']);

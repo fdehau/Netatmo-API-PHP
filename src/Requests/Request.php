@@ -12,7 +12,5 @@ interface Request
 
     public function withAuthorization();
 
-    public function getResponseClass();
-
-    public function getResponseOptions();
+    public function getResponseDeserializer();
 }

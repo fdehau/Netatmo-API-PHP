@@ -2,7 +2,7 @@
 
 namespace Netatmo\Responses;
 
-abstract class Response
+class Response
 {
     protected $timestamp;
 
@@ -14,10 +14,5 @@ abstract class Response
     public function setTimestamp($ts)
     {
         $this->timestamp = $ts;
-    }
-
-    public static function fromArray(array $array, array $options)
-    {
-        return new self();
     }
 }

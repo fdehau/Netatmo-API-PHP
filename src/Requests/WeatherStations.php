@@ -5,11 +5,12 @@ namespace Netatmo\Requests;
 use Netatmo\Api;
 use Netatmo\Http;
 use Netatmo\Exceptions;
+use Netatmo\Serialization;
 
 /**
  * ```php
  * $request = WeatherStations::getDevice($deviceId)
- *      ->skipFavorites();
+ *      ->includeFavorites();
  * ```php
  */
 
@@ -18,7 +19,7 @@ class WeatherStations implements Request
     public function __construct($deviceId)
     {
         $this->deviceId = $deviceId;
-        $this->includeFavorites = true;
+        $this->includeFavorites = false;
     }
 
     public static function getDevice($deviceId)
@@ -26,9 +27,10 @@ class WeatherStations implements Request
         return new self($deviceId);
     }
 
-    public function skipFavorites()
+    public function includeFavorites()
     {
-        $this->includeFavorites = false;
+        $this->includeFavorites = true;
+        return $this;
     }
 
     public function getPath()
@@ -49,14 +51,9 @@ class WeatherStations implements Request
         ];
     }
 
-    public function getResponseClass()
+    public function getResponseDeserializer()
     {
-        return null;
-    }
-
-    public function getResponseOptions()
-    {
-        return [];
+        return new Serialization\Responses\WeatherStationsDeserializer();
     }
 
     public function withAuthorization()

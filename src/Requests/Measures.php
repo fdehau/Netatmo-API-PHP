@@ -5,6 +5,7 @@ namespace Netatmo\Requests;
 use Netatmo\Api;
 use Netatmo\Http;
 use Netatmo\Exceptions;
+use Netatmo\Serialization;
 
 /**
  * ```php
@@ -131,17 +132,12 @@ class Measures implements Request
         return $params;
     }
 
-    public function getResponseClass()
+    public function getResponseDeserializer()
     {
-        return \Netatmo\Responses\Measures::class;
-    }
-
-    public function getResponseOptions()
-    {
-        return [
-            "optimize" => $this->optimize,
-            "types" => $this->types,
-        ];
+        return new Serialization\Responses\MeasuresDeserializer(
+            $this->optimize,
+            $this->types
+        );
     }
 
     public function withAuthorization()
