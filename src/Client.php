@@ -106,10 +106,15 @@ class Client
         }
     }
 
-    public function send(Requests\Request $request)
-    {
+    public function send(
+        Requests\Request $request,
+        Requests\Options $options = null
+    ) {
+        if ($options === null) {
+            $options = new Requests\Options();
+        }
         try {
-            return $this->transfer($request);
+            return $this->transfer($request, $options);
         } catch (Exceptions\ApiError $ex) {
             if ($ex->getCode() === ErrorCode::ACCESS_TOKEN_EXPIRED &&
                 $this->refreshToken !== null) {
@@ -123,12 +128,13 @@ class Client
         }
     }
 
-    public function transfer(Requests\Request $request)
-    {
-        if ($request->withAuthorization() && $this->accessToken === null) {
-            throw Exceptions\Error("attempting to send a request without an access token");
+    public function transfer(
+        Requests\Request $request,
+        Requests\Options $options = null
+    ) {
+        if ($options === null) {
+            $options = new Requests\Options();
         }
-
         // Build path
         $path = ($request->getMethod() === Http\Method::GET)
             ? $request->getPath() . "?" . http_build_query($request->getParams(), null, "&")
@@ -147,6 +153,13 @@ class Client
             $httpRequest = $httpRequest->withHeader('Content-Type', 'application/json');
         }
 
+        if ($request->withAuthorization()) {
+            if ($this->accessToken === null) {
+                throw Exceptions\Error("attempting to send a request without an access token");
+            }
+            $httpRequest = $httpRequest->withHeader("Authorization", "Bearer {$this->accessToken}");
+        }
+
         $response = $this->httpClient->send($httpRequest, $this->getHttpOptions());
 
         $status = $response->getStatusCode();
@@ -160,7 +173,7 @@ class Client
         if ($status === 200) {
             $result = isset($body['body']) ? $body['body'] : [];
             $deserializer = $request->getResponseDeserializer();
-            if ($deserializer === null) {
+            if ($deserializer === null || !$options->shouldDecodeBody()) {
                 return $body;
             } else {
                 $response = call_user_func_array(
