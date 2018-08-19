@@ -108,7 +108,7 @@ class StationsTest extends TestCase
                                 "Humidity" => 42,
                                 "pressure_trend" => "stable",
                                 "AbsolutePressure" => 1033.2,
-                                "pressure" => 1026.4,
+                                "Pressure" => 1026.4,
                                 "Noise" => 53,
                             ]
                         ]

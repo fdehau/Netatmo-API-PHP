@@ -11,7 +11,7 @@ class StationMeasuresDeserializer extends MeasuresDeserializer
     const TEMPERATURE = "Temperature";
     const HUMIDITY = "Humidity";
     const CO2 = "CO2";
-    const PRESSURE = "pressure";
+    const PRESSURE = "Pressure";
     const ABSOLUTE_PRESSURE = "AbsolutePressure";
     const PRESSURE_TREND = "pressure_trend";
     const NOISE = "Noise";
