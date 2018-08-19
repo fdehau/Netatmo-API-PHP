@@ -1,6 +1,6 @@
 <?php
 
-namespace Netatmo\Sdk\Commands;
+namespace Netatmo\Sdk\Commands\OAuth2;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,33 +11,17 @@ use Netatmo\Sdk\Client;
 use Netatmo\Sdk\OAuth2;
 use Netatmo\Sdk\Exceptions;
 
-class GetTokens extends Command
+class Token extends Command
 {
     protected function configure()
     {
-        $this->setName("get-tokens")
+        $this->setName("oauth2:token")
             ->setDescription("Retrieve a new set of OAuth2 tokens from Netatmo");
 
-        $this->addArgument(
-            'client_id',
-            InputArgument::REQUIRED,
-            'oauth2 client id'
-        );
-        $this->addArgument(
-            'client_secret',
-            InputArgument::REQUIRED,
-            'oauth2 client secret'
-        );
-        $this->addArgument(
-            'username',
-            InputArgument::REQUIRED,
-            'oauth2 username'
-        );
-        $this->addArgument(
-            'password',
-            InputArgument::REQUIRED,
-            'oauth2 password'
-        );
+        $this->addArgument('client_id', InputArgument::REQUIRED);
+        $this->addArgument('client_secret', InputArgument::REQUIRED);
+        $this->addArgument('username', InputArgument::REQUIRED);
+        $this->addArgument('password', InputArgument::REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

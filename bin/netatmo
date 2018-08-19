@@ -3,8 +3,9 @@
 require_once __DIR__ . "/../vendor/autoload.php";
 
 use Symfony\Component\Console\Application;
-use Netatmo\Commands;
+use Netatmo\Sdk\Commands;
 
 $application = new Application();
-$application->add(new Commands\GetTokens());
+$application->add(new Commands\OAuth2\Token());
+$application->add(new Commands\Weather\Stations());
 $application->run();
