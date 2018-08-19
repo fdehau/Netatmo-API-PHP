@@ -31,7 +31,7 @@ class HomeCoachsTest extends TestCase
                         [
                             "_id" => "70:ee:50:2c:70:ca",
                             "last_status_store" => 3600,
-                            "station_name" => "Indoor",
+                            "name" => "Indoor",
                             "date_setup" => 1200,
                             "last_setup" => 1800,
                             "firmware" => 100,
@@ -39,6 +39,17 @@ class HomeCoachsTest extends TestCase
                             "data_type" => [
                                 "Temperature",
                                 "Humidity"
+                            ],
+                            "dashboard_data" => [
+                                "time_utc" => 15000,
+                                "Temperature" => 23,
+                                "Humidity" => 42,
+                                "max_temp" => 33,
+                                "date_max_temp" => 8000,
+                                "min_temp" => 23,
+                                "date_min_temp" => 7000,
+                                "CO2" => 1000,
+                                "Noise" => 53,
                             ],
                             "place" => [
                                 "altitude" => 20,
@@ -78,34 +89,50 @@ class HomeCoachsTest extends TestCase
         $homeCoachs = $response->getHomeCoachs();
         $this->assertCount(1, $homeCoachs);
 
-        $station = $homeCoachs[0];
-        $this->assertEquals("70:ee:50:2c:70:ca", $station->getId());
-        $this->assertEquals(3600, $station->getLastStatusTimestamp());
-        $this->assertEquals("Indoor", $station->getName());
+        $homeCoach = $homeCoachs[0];
+        $this->assertEquals("70:ee:50:2c:70:ca", $homeCoach->getId());
+        $this->assertEquals(3600, $homeCoach->getLastStatusTimestamp());
+        $this->assertEquals("Indoor", $homeCoach->getName());
 
-        $installation = $station->getInstallation();
+        $installation = $homeCoach->getInstallation();
         $this->assertNotNull($installation);
         $this->assertEquals(1200, $installation->getFirstSetup());
         $this->assertEquals(1800, $installation->getLastSetup());
 
-        $firmware = $station->getFirmware();
+        $firmware = $homeCoach->getFirmware();
         $this->assertNotNull($firmware);
         $this->assertEquals(100, $firmware->getVersion());
         $this->assertEquals(2000, $firmware->getLastUpdate());
 
-        $this->assertEquals(70, $station->getWifiSignalQuality());
+        $this->assertEquals(70, $homeCoach->getWifiSignalQuality());
         $this->assertEquals(
             ["Temperature", "Humidity"],
-            $station->getMeasureTypes()
+            $homeCoach->getMeasureTypes()
         );
 
         // Check place
-        $place = $station->getPlace();
+        $place = $homeCoach->getPlace();
         $this->assertEquals(2.23, $place->getLongitude());
         $this->assertEquals(48.88, $place->getLatitude());
         $this->assertEquals(20, $place->getAltitude());
         $this->assertEquals("FR", $place->getCountry());
         $this->assertEquals("Paris", $place->getCity());
         $this->assertEquals("Europe/Paris", $place->getTimezone());
+
+        // Check measures
+        $measures = $homeCoach->getMeasures();
+        $this->assertInstanceOf(
+            Models\AirCare\Measures::class,
+            $measures
+        );
+        $this->assertEquals(15000, $measures->getTimestamp());
+        $this->assertEquals(23, $measures->getTemperature());
+        $this->assertEquals(42, $measures->getHumidity());
+        $this->assertEquals(33, $measures->getMaxTemperature()->getValue());
+        $this->assertEquals(8000, $measures->getMaxTemperature()->getTimestamp());
+        $this->assertEquals(23, $measures->getMinTemperature()->getValue());
+        $this->assertEquals(7000, $measures->getMinTemperature()->getTimestamp());
+        $this->assertEquals(1000, $measures->getCo2());
+        $this->assertEquals(53, $measures->getNoise());
     }
 }

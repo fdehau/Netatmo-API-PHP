@@ -13,6 +13,7 @@ class Station extends Models\Device
     protected $wifiSignalQuality;
     protected $measureTypes;
     protected $modules = [];
+    protected $measures;
 
     public function getLastStatusTimestamp()
     {
@@ -42,6 +43,11 @@ class Station extends Models\Device
     public function getModules()
     {
         return $this->modules;
+    }
+
+    public function getMeasures()
+    {
+        return $this->measures;
     }
 
     public function setLastStatusTimestamp($ts)
@@ -77,5 +83,10 @@ class Station extends Models\Device
     public function addModule(Module $module)
     {
         $this->modules[] = $module;
+    }
+
+    public function setMeasures(Measures $measures)
+    {
+        $this->measures = $measures;
     }
 }

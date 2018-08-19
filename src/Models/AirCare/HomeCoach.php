@@ -12,6 +12,7 @@ class HomeCoach extends Models\Device
     protected $calibratingCo2;
     protected $wifiSignalQuality;
     protected $measureTypes;
+    protected $measures;
 
     public function getLastStatusTimestamp()
     {
@@ -28,14 +29,19 @@ class HomeCoach extends Models\Device
         return $this->place;
     }
 
+    public function isCalibratingCo2()
+    {
+        return $this->calibratingCo2;
+    }
+
     public function getMeasureTypes()
     {
         return $this->measureTypes;
     }
 
-    public function getBatteryLevel()
+    public function getMeasures()
     {
-        return $this->batteryLevel;
+        return $this->measures;
     }
 
     public function setLastStatusTimestamp($ts)
@@ -58,13 +64,13 @@ class HomeCoach extends Models\Device
         $this->calibratingCo2 = $flag;
     }
 
-    public function isCalibratingCo2()
-    {
-        return $this->calibratingCo2;
-    }
-
     public function setMeasureTypes(array $types)
     {
         $this->measureTypes = $types;
+    }
+
+    public function setMeasures(Measures $measures)
+    {
+        $this->measures = $measures;
     }
 }

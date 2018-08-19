@@ -20,6 +20,7 @@ class StationDeserializer implements Serialization\ArrayDeserializer
     const WIFI_SIGNAL_QUALITY = "wifi_status";
     const MEASURE_TYPES = "data_type";
     const MODULES = "modules";
+    const MEASURES = "dashboard_data";
 
     public function fromArray(array $array)
     {
@@ -67,6 +68,11 @@ class StationDeserializer implements Serialization\ArrayDeserializer
                 $module = $de->fromArray($module);
                 $weatherStation->addModule($module);
             }
+        }
+        if (isset($array[self::MEASURES])) {
+            $de = new Serialization\Models\Weather\StationMeasuresDeserializer();
+            $measures = $de->fromArray($array[self::MEASURES]);
+            $weatherStation->setMeasures($measures);
         }
         return $weatherStation;
     }

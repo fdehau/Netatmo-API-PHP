@@ -11,7 +11,7 @@ class HomeCoachDeserializer implements Serialization\ArrayDeserializer
     const ID = "_id";
     const LAST_STATUS_TIMESTAMP = "last_status_store";
     const PLACE = "place";
-    const NAME = "station_name";
+    const NAME = "name";
     const CALIBRATING_CO2 = "co2_calibrating";
     const FIRST_SETUP = "date_setup";
     const LAST_SETUP = "last_setup";
@@ -19,6 +19,7 @@ class HomeCoachDeserializer implements Serialization\ArrayDeserializer
     const FIRMWARE_VERSION = "firmware";
     const WIFI_SIGNAL_QUALITY = "wifi_status";
     const MEASURE_TYPES = "data_type";
+    const MEASURES = "dashboard_data";
 
     public function fromArray(array $array)
     {
@@ -59,6 +60,11 @@ class HomeCoachDeserializer implements Serialization\ArrayDeserializer
         }
         if (isset($array[self::MEASURE_TYPES])) {
             $homeCoach->setMeasureTypes($array[self::MEASURE_TYPES]);
+        }
+        if (isset($array[self::MEASURES])) {
+            $de = new Serialization\Models\AirCare\MeasuresDeserializer();
+            $measures = $de->fromArray($array[self::MEASURES]);
+            $homeCoach->setMeasures($measures);
         }
         return $homeCoach;
     }

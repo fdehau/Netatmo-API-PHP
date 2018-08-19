@@ -8,6 +8,7 @@ class Module extends Models\Device
 {
     protected $battery;
     protected $radio;
+    protected $measures;
 
     public function getBattery()
     {
@@ -19,6 +20,11 @@ class Module extends Models\Device
         return $this->radio;
     }
 
+    public function getMeasures()
+    {
+        return $this->measures;
+    }
+
     public function setBattery(Models\Battery $battery)
     {
         $this->battery = $battery;
@@ -27,5 +33,10 @@ class Module extends Models\Device
     public function setRadio(Models\Radio $radio)
     {
         $this->radio = $radio;
+    }
+
+    public function setMeasures(Measures $measures)
+    {
+        $this->measures = $measures;
     }
 }

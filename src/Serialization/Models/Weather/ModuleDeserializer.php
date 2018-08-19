@@ -15,6 +15,7 @@ class ModuleDeserializer implements Serialization\ArrayDeserializer
     const RADIO_SIGNAL_QUALITY = "rf_status";
     const RADIO_LAST_MESSAGE = "last_message";
     const RADIO_LAST_SEEN = "last_seen";
+    const MEASURES = "dashboard_data";
 
     const OUTDOOR_MODULE = "NAModule1";
     const WIND_GAUGE = "NAModule2";
@@ -55,6 +56,14 @@ class ModuleDeserializer implements Serialization\ArrayDeserializer
             }
             $module->setRadio($radio);
         }
+
+        // Parser measures snapshot
+        if (isset($array[self::MEASURES])) {
+            $de = $this->getMeasuresDeserializerByType($array[self::TYPE]);
+            $measures = $de->fromArray($array[self::MEASURES]);
+            $module->setMeasures($measures);
+        }
+
         return $module;
     }
 
@@ -66,11 +75,25 @@ class ModuleDeserializer implements Serialization\ArrayDeserializer
             case self::WIND_GAUGE:
                 return new Models\Weather\WindGauge($id);
             case self::RAIN_GAUGE:
-                return Models\Weather\RaingGauge($id);
+                return new Models\Weather\RainGauge($id);
             case self::INDOOR_MODULE:
                 return new Models\Weather\IndoorModule($id);
             default:
                 throw Exceptions\Error("Invalid module type");
+        }
+    }
+
+    public function getMeasuresDeserializerByType($type)
+    {
+        switch ($type) {
+            case self::OUTDOOR_MODULE:
+                return new Serialization\Models\Weather\OutdoorMeasuresDeserializer();
+            case self::WIND_GAUGE:
+                return new Serialization\Models\Weather\WindMeasuresDeserializer();
+            case self::RAIN_GAUGE:
+                return new Serialization\Models\Weather\RainMeasuresDeserializer();
+            default:
+                return new Serialization\Models\Weather\MeasuresDeserializer();
         }
     }
 }
