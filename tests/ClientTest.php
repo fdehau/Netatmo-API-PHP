@@ -125,13 +125,10 @@ class ClientTest extends TestCase
             new Fixtures\Responses\Json(
                 400,
                 [
-                    "body" => [
-                        "error" => [
-                            "code" => ErrorCode::INVALID_ARG,
-                            "message" => "invalid argument"
-                        ]
-                    ],
-                    "time_server" => 121212
+                    "error" => [
+                        "code" => ErrorCode::INVALID_ARG,
+                        "message" => "invalid argument"
+                    ]
                 ]
             )
         ]);
@@ -155,12 +152,9 @@ class ClientTest extends TestCase
             new Fixtures\Responses\Json(
                 400,
                 [
-                    "body" => [
-                        "error" => [
-                            "code" => ErrorCode::ACCESS_TOKEN_EXPIRED,
-                        ]
-                    ],
-                    "time_server" => 121212
+                    "error" => [
+                        "code" => ErrorCode::ACCESS_TOKEN_EXPIRED,
+                    ]
                 ]
             ),
             Fixtures\Responses\OAuth2\Tokens::fromTokens($tokens),
@@ -201,10 +195,8 @@ class ClientTest extends TestCase
             new Fixtures\Responses\Json(
                 400,
                 [
-                    "body" => [
-                        "error" => [
-                            "code" => ErrorCode::ACCESS_TOKEN_EXPIRED,
-                        ]
+                    "error" => [
+                        "code" => ErrorCode::ACCESS_TOKEN_EXPIRED,
                     ],
                     "time_server" => 121212
                 ]

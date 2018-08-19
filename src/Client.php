@@ -176,8 +176,7 @@ class Client
                 return $response;
             }
         } else {
-            $result = isset($body['body']) ? $body['body'] : [];
-            $error = isset($result['error']) ? $result['error'] : [];
+            $error = isset($body['error']) ? $body['error'] : [];
             $code = isset($error['code']) ? $error['code'] : null;
             $msg= isset($error['message']) ? $error['message'] : null;
             throw new Exceptions\ApiError($msg, $code);
