@@ -13,6 +13,14 @@ class PlaceDeserializer implements Serialization\ArrayDeserializer
     const COUNTRY = "country";
     const TIMEZONE = "timezone";
     const LOCATION = "location";
+    const COORDINATES = "coordinates";
+
+    protected $locationKey;
+
+    public function __construct($locationKey = self::LOCATION)
+    {
+        $this->locationKey = $locationKey;
+    }
 
     public function fromArray(array $array)
     {
@@ -29,9 +37,9 @@ class PlaceDeserializer implements Serialization\ArrayDeserializer
         if (isset($array[self::TIMEZONE])) {
             $place->setTimezone($array[self::TIMEZONE]);
         }
-        if (isset($array[self::LOCATION])) {
-            $place->setLongitude($array[self::LOCATION][0]);
-            $place->setLatitude($array[self::LOCATION][1]);
+        if (isset($array[$this->locationKey])) {
+            $place->setLongitude($array[$this->locationKey][0]);
+            $place->setLatitude($array[$this->locationKey][1]);
         }
         return $place;
     }
