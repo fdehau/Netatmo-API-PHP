@@ -4,8 +4,6 @@ namespace Netatmo\Sdk;
 
 class Client
 {
-    const ACCESS_TOKEN_URI = "https://api.netatmo.com";
-
     /**
      * OAuth2 configuration
      *

@@ -110,7 +110,7 @@ class NAWelcomeApiClient extends NAApiClient
     /**
     * @brief drop webhook notifications for the current user
     */
-    public function dropWebhook()
+    public function dropWebhook($app_type)
     {
         parent::dropWebhook("app_camera");
     }

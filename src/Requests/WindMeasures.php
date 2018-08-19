@@ -11,7 +11,7 @@ class WindMeasures extends Measures
             "WindAngle",
             "GustStrength",
             "GustAngle",
-            "date_max_gust";
+            "date_max_gust"
         ];
         parent::getParams();
     }
