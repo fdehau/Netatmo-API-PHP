@@ -6,7 +6,7 @@ use Netatmo\Sdk\Api;
 
 class Config
 {
-    const OAUTH2_URI = Api::BASE_URI . "/oauth2";
+    const OAUTH2_URI = Api::URI . "/oauth2";
 
     const TOKEN_URI = self::OAUTH2_URI . "/token";
 
@@ -96,6 +96,21 @@ class Config
     public function setScopes(array $scopes)
     {
         $this->scopes = $scopes;
+    }
+
+    public function setTokenUri($uri)
+    {
+        $this->tokenUri = $uri;
+    }
+
+    public function setAuthorizeUri($uri)
+    {
+        $this->authorizeUri = $uri;
+    }
+
+    public function setRevokeUri($uri)
+    {
+        $this->revokeUri = $uri;
     }
 
     public static function fromArray(array $array)

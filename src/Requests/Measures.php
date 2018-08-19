@@ -2,7 +2,6 @@
 
 namespace Netatmo\Sdk\Requests;
 
-use Netatmo\Sdk\Api;
 use Netatmo\Sdk\Http;
 use Netatmo\Sdk\Exceptions;
 use Netatmo\Sdk\Serialization;
@@ -87,7 +86,7 @@ class Measures implements Request
 
     public function getPath()
     {
-        return Api::URI . "/getmeasure";
+        return "api/getmeasure";
     }
 
     public function getMethod()

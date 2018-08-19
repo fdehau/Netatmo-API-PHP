@@ -22,9 +22,15 @@ class Client
 
     protected $refreshToken = null;
 
-    public function __construct(OAuth2\Config $oauth2Config)
-    {
+    public function __construct(
+        OAuth2\Config $oauth2Config,
+        Config $config = null
+    ) {
         $this->oauth2Config = $oauth2Config;
+        if ($config === null) {
+            $config = new Config();
+        }
+        $this->config = $config;
         $this->httpClient = new Http\GuzzleClient();
     }
 
@@ -134,7 +140,8 @@ class Client
             $options = new Requests\Options();
         }
         // Build path
-        $path = ($request->getMethod() === Http\Method::GET)
+        $path = "{$this->config->getUri()}/";
+        $path .= ($request->getMethod() === Http\Method::GET)
             ? $request->getPath() . "?" . http_build_query($request->getParams(), null, "&")
             : $request->getPath();
 

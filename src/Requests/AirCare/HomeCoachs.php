@@ -28,7 +28,7 @@ class HomeCoachs implements Requests\Request
 
     public function getPath()
     {
-        return Api::URI . "/gethomecoachsdata";
+        return "api/gethomecoachsdata";
     }
 
     public function getMethod()

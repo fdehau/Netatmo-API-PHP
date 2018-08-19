@@ -36,7 +36,7 @@ class Stations implements Requests\Request
 
     public function getPath()
     {
-        return Api::URI . "/getstationsdata";
+        return "api/getstationsdata";
     }
 
     public function getMethod()
