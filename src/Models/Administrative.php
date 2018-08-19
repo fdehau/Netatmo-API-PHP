@@ -8,8 +8,8 @@ class Administrative
     protected $locale;
     protected $country;
     protected $unit;
-    protected $windunit;
-    protected $pressureunit;
+    protected $windUnit;
+    protected $pressureUnit;
     protected $feelLikeAlgo;
 
     public function getLang()

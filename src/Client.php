@@ -167,8 +167,11 @@ class Client
                     [$deserializer, "fromArray"],
                     [$result]
                 );
-                if (isset($body['time_server'])) {
-                    $response->setTimestamp($body['time_server']);
+                if (isset($body["time_server"])) {
+                    $response->setTimestamp($body["time_server"]);
+                }
+                if (isset($body["time_exec"])) {
+                    $response->setRequestExecutionTime($body["time_exec"]);
                 }
                 return $response;
             }

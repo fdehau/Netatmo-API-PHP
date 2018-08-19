@@ -108,7 +108,7 @@ class ClientTest extends TestCase
         ]);
         $client->setHttpClient($httpClient);
         $client->setAccessToken(new OAuth2\Token("000|access"));
-        $request = Requests\WeatherStations::getDevice("70:ee:50:2c:70:ca");
+        $request = Requests\Weather\Stations::getDevice("70:ee:50:2c:70:ca");
         $client->send($request);
     }
 
@@ -137,7 +137,7 @@ class ClientTest extends TestCase
         ]);
         $client->setHttpClient($httpClient);
         $client->setAccessToken(new OAuth2\Token("000|access"));
-        $request = Requests\WeatherStations::getDevice("70:ee:50:2c:70:ca");
+        $request = Requests\Weather\Stations::getDevice("70:ee:50:2c:70:ca");
         $client->send($request);
     }
 
@@ -175,7 +175,7 @@ class ClientTest extends TestCase
         $client->setHttpClient($httpClient);
         $client->setAccessToken(new OAuth2\Token("000|access"));
         $client->setRefreshToken(new OAuth2\Token("000|refresh"));
-        $request = Requests\WeatherStations::getDevice("70:ee:50:2c:70:ca");
+        $request = Requests\Weather\Stations::getDevice("70:ee:50:2c:70:ca");
         $client->send($request);
         $this->assertEquals(
             (string) $client->getAccessToken(),
@@ -219,7 +219,7 @@ class ClientTest extends TestCase
         $client->setHttpClient($httpClient);
         $client->setAccessToken(new OAuth2\Token("000|access"));
         $client->setRefreshToken(new OAuth2\Token("000|refresh"));
-        $request = Requests\WeatherStations::getDevice("70:ee:50:2c:70:ca");
+        $request = Requests\Weather\Stations::getDevice("70:ee:50:2c:70:ca");
         $client->send($request);
     }
 }

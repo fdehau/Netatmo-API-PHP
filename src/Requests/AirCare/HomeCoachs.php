@@ -1,25 +1,24 @@
 <?php
 
-namespace Netatmo\Sdk\Requests;
+namespace Netatmo\Sdk\Requests\AirCare;
 
 use Netatmo\Sdk\Api;
 use Netatmo\Sdk\Http;
 use Netatmo\Sdk\Exceptions;
 use Netatmo\Sdk\Serialization;
+use Netatmo\Sdk\Requests;
 
 /**
  * ```php
- * $request = WeatherStations::getDevice($deviceId)
- *      ->includeFavorites();
+ * $request = HomeCoachs::getDevice($deviceId)
  * ```php
  */
 
-class WeatherStations implements Request
+class HomeCoachs implements Requests\Request
 {
     public function __construct($deviceId)
     {
         $this->deviceId = $deviceId;
-        $this->includeFavorites = false;
     }
 
     public static function getDevice($deviceId)
@@ -27,15 +26,9 @@ class WeatherStations implements Request
         return new self($deviceId);
     }
 
-    public function includeFavorites()
-    {
-        $this->includeFavorites = true;
-        return $this;
-    }
-
     public function getPath()
     {
-        return Api::URI . "/getstationsdata";
+        return Api::URI . "/gethomecoachsdata";
     }
 
     public function getMethod()
@@ -47,13 +40,12 @@ class WeatherStations implements Request
     {
         return [
             "device_id" => $this->deviceId,
-            "get_favorites" => $this->includeFavorites
         ];
     }
 
     public function getResponseDeserializer()
     {
-        return new Serialization\Responses\WeatherStationsDeserializer();
+        return new Serialization\Responses\AirCare\HomeCoachsDeserializer();
     }
 
     public function withAuthorization()

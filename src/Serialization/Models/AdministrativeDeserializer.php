@@ -13,7 +13,7 @@ class AdministrativeDeserializer implements Serialization\ArrayDeserializer
     const COUNTRY = "country";
     const UNIT = "unit";
     const WIND_UNIT = "windunit";
-    const PRESSURE_UNIT = "pressure_unit";
+    const PRESSURE_UNIT = "pressureunit";
     const FEEL_LIKE_ALGO = "feel_like_algo";
 
     public function fromArray(array $array)
@@ -36,7 +36,7 @@ class AdministrativeDeserializer implements Serialization\ArrayDeserializer
             $administrative->setWindUnit($array[self::WIND_UNIT]);
         }
         if (isset($array[self::PRESSURE_UNIT])) {
-            $administrative->setWindUnit($array[self::PRESSURE_UNIT]);
+            $administrative->setPressureUnit($array[self::PRESSURE_UNIT]);
         }
         if (isset($array[self::FEEL_LIKE_ALGO])) {
             $administrative->setFeelLikeAlgo($array[self::FEEL_LIKE_ALGO]);

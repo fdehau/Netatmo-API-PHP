@@ -1,10 +1,11 @@
 <?php
 
-namespace Netatmo\Sdk\Responses;
+namespace Netatmo\Sdk\Responses\Weather;
 
 use Netatmo\Sdk\Models;
+use Netatmo\Sdk\Responses;
 
-class WeatherStations extends Response
+class Stations extends Responses\Response
 {
     protected $stations = [];
     protected $user;
@@ -24,7 +25,7 @@ class WeatherStations extends Response
         $this->user = $user;
     }
 
-    public function addStation(Models\WeatherStation $station)
+    public function addStation(Models\Weather\Station $station)
     {
         $this->stations[] = $station;
     }

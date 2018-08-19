@@ -11,8 +11,18 @@ class Response
         return $this->timestamp;
     }
 
+    public function getRequestExecutionTime()
+    {
+        return $this->requestExecutionTime;
+    }
+
     public function setTimestamp($ts)
     {
         $this->timestamp = $ts;
+    }
+
+    public function setRequestExecutionTime($time)
+    {
+        $this->requestExecutionTime = $time;
     }
 }

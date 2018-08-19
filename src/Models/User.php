@@ -26,6 +26,6 @@ class User
 
     public function setAdministrative($administrative)
     {
-        return $this->administrative;
+        $this->administrative = $administrative;
     }
 }
