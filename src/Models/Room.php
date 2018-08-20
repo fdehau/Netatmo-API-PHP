@@ -2,13 +2,12 @@
 
 namespace Netatmo\Sdk\Models;
 
-class Home
+class Room
 {
     protected $id;
     protected $name;
-    protected $place;
-    protected $rooms = [];
-    protected $modules = [];
+    protected $type;
+    protected $modules;
 
     public function __construct($id)
     {
@@ -25,14 +24,9 @@ class Home
         return $this->name;
     }
 
-    public function getPlace()
+    public function getType()
     {
-        return $this->place;
-    }
-
-    public function getRooms()
-    {
-        return $this->rooms;
+        return $this->type;
     }
 
     public function getModules()
@@ -45,18 +39,13 @@ class Home
         $this->name = $name;
     }
 
-    public function setPlace(Place $place)
+    public function setType($type)
     {
-        $this->place = $place;
+        $this->type = $type;
     }
 
-    public function addRoom(Room $room)
+    public function addModule($moduleId)
     {
-        $this->rooms[] = $room;
-    }
-
-    public function addModule(Device $device)
-    {
-        $this->modules[] = $device;
+        $this->modules[] = $moduleId;
     }
 }

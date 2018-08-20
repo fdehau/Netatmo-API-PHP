@@ -2,10 +2,11 @@
 
 namespace Netatmo\Sdk\Models;
 
-abstract class Device
+class Device
 {
     protected $id;
     protected $name;
+    protected $room;
     protected $installation;
     protected $firmware;
 
@@ -34,6 +35,11 @@ abstract class Device
         return $this->installation;
     }
 
+    public function getRoom()
+    {
+        return $this->room;
+    }
+
     public function setName($name)
     {
         $this->name = $name;
@@ -47,5 +53,10 @@ abstract class Device
     public function setInstallation(Installation $installation)
     {
         $this->installation = $installation;
+    }
+
+    public function setRoom($id)
+    {
+        $this->room = $id;
     }
 }

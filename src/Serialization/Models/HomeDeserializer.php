@@ -10,6 +10,8 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
 {
     const ID = "id";
     const NAME = "name";
+    const ROOMS = "rooms";
+    const MODULES = "modules";
 
     public function fromArray(array $array)
     {
@@ -26,6 +28,39 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
         $place = $de->fromArray($array);
         $home->setPlace($place);
 
+        if (isset($array[self::ROOMS]) && is_array($array[self::ROOMS])) {
+            $de = new RoomDeserializer();
+            foreach ($array[self::ROOMS] as $room) {
+                $room = $de->fromArray($room);
+                $home->addRoom($room);
+            }
+        }
+
+        if (isset($array[self::MODULES]) && is_array($array[self::MODULES])) {
+            foreach ($array[self::MODULES] as $module) {
+                if (!isset($module["type"])) {
+                    throw new Exceptions\Error("Missing type");
+                }
+                $de = $this->getModuleDeserializerByType($module["type"]);
+                $module = $de->fromArray($module);
+                $home->addModule($module);
+            }
+        }
+
         return $home;
+    }
+
+    public function getModuleDeserializerByType($type)
+    {
+        switch ($type) {
+            case "NAPlug":
+                return new Serialization\Models\Energy\RelayDeserializer();
+            case "NATherm1":
+                return new Serialization\Models\Energy\ThermostatDeserializer();
+            case "NRV":
+                return new Serialization\Models\Energy\ValveDeserializer();
+            default:
+                return new Serialization\Models\DeviceDeserializer();
+        }
     }
 }
