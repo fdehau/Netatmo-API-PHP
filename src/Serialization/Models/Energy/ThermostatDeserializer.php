@@ -8,9 +8,9 @@ use Netatmo\Sdk\Models;
 
 class ThermostatDeserializer extends Serialization\Models\ModuleDeserializer
 {
-    public function __construct()
+    public function getDeviceClass()
     {
-        parent::__construct(Models\Energy\Thermostat::class);
+        return Models\Energy\Thermostat::class;
     }
 
     public function fromArray(array $array)

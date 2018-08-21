@@ -12,6 +12,7 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
     const NAME = "name";
     const ROOMS = "rooms";
     const MODULES = "modules";
+    const SCHEDULES = "schedules";
 
     public function fromArray(array $array)
     {
@@ -47,6 +48,17 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
             }
         }
 
+        if (isset($array[self::SCHEDULES]) && is_array($array[self::SCHEDULES])) {
+            foreach ($array[self::SCHEDULES] as $schedule) {
+                if (!isset($schedule["type"])) {
+                    throw new Exceptions\Error("Missing type");
+                }
+                $de = $this->getScheduleDeserializerByType($schedule["type"]);
+                $schedule = $de->fromArray($schedule);
+                $home->addSchedule($schedule);
+            }
+        }
+
         return $home;
     }
 
@@ -61,6 +73,16 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
                 return new Serialization\Models\Energy\ValveDeserializer();
             default:
                 return new Serialization\Models\DeviceDeserializer();
+        }
+    }
+
+    public function getScheduleDeserializerByType($type)
+    {
+        switch ($type) {
+            case "therm":
+                return new Serialization\Models\Schedules\EnergyScheduleDeserializer();
+            default:
+                return new Serialization\Models\Schedules\ScheduleDeserializer();
         }
     }
 }

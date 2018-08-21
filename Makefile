@@ -8,9 +8,13 @@ install:
 update:
 	@composer update
 
+PHPUNIT_OPTIONS =
+ifdef PHPUNIT_FILTER
+  PHPUNIT_OPTIONS += --filter $(PHPUNIT_FILTER)
+endif
 .PHONY: test
 test:
-	@./vendor/bin/phpunit
+	@./vendor/bin/phpunit $(PHPUNIT_OPTIONS)
 
 .PHONY: lint
 lint:

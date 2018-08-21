@@ -8,9 +8,9 @@ use Netatmo\Sdk\Models;
 
 class ValveDeserializer extends Serialization\Models\ModuleDeserializer
 {
-    public function __construct()
+    public function getDeviceClass()
     {
-        parent::__construct(Models\Energy\Valve::class);
+        return Models\Energy\Valve::class;
     }
 
     public function fromArray(array $array)

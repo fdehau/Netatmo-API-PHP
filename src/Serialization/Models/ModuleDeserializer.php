@@ -10,9 +10,9 @@ class ModuleDeserializer extends DeviceDeserializer
 {
     const BRIDGE = "bridge";
 
-    public function __construct($class = Models\Module::class)
+    public function getDeviceClass()
     {
-        parent::__construct($class);
+        return Models\Module::class;
     }
 
     public function fromArray(array $array)

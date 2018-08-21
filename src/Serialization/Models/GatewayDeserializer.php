@@ -10,9 +10,9 @@ class GatewayDeserializer extends DeviceDeserializer
 {
     const MODULES = "modules_bridged";
 
-    public function __construct($class = Models\Gateway::class)
+    public function getDeviceClass()
     {
-        parent::__construct($class);
+        return Models\Gateway::class;
     }
 
     public function fromArray(array $array)

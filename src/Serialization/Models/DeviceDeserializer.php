@@ -6,24 +6,22 @@ use Netatmo\Sdk\Serialization;
 use Netatmo\Sdk\Exceptions;
 use Netatmo\Sdk\Models;
 
-class DeviceDeserializer implements Serialization\ArrayDeserializer
+abstract class DeviceDeserializer implements Serialization\ArrayDeserializer
 {
     const ID = "id";
     const NAME = "name";
     const ROOM = "room_id";
     const SETUP_DATE = "setup_date";
 
-    public function __construct($class = Models\Device::class)
-    {
-        $this->class = $class;
-    }
+    abstract public function getDeviceClass();
 
     public function fromArray(array $array)
     {
         if (!isset($array[self::ID])) {
             throw new Exceptions\Error("Missing id");
         }
-        $device = new $this->class($array[self::ID]);
+        $class = $this->getDeviceClass();
+        $device = new $class($array[self::ID]);
 
         if (isset($array[self::NAME])) {
             $device->setName($array[self::NAME]);

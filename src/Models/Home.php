@@ -9,6 +9,7 @@ class Home
     protected $place;
     protected $rooms = [];
     protected $modules = [];
+    protected $schedules = [];
 
     public function __construct($id)
     {
@@ -40,6 +41,11 @@ class Home
         return $this->modules;
     }
 
+    public function getSchedules()
+    {
+        return $this->schedules;
+    }
+
     public function setName($name)
     {
         $this->name = $name;
@@ -58,5 +64,10 @@ class Home
     public function addModule(Device $device)
     {
         $this->modules[] = $device;
+    }
+
+    public function addSchedule(Schedules\Schedule $schedule)
+    {
+        $this->schedules[] = $schedule;
     }
 }

@@ -8,9 +8,9 @@ use Netatmo\Sdk\Models;
 
 class RelayDeserializer extends Serialization\Models\GatewayDeserializer
 {
-    public function __construct()
+    public function getDeviceClass()
     {
-        parent::__construct(Models\Energy\Relay::class);
+        return Models\Energy\Relay::class;
     }
 
     public function fromArray(array $array)

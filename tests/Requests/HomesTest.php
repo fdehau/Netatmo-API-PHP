@@ -83,6 +83,58 @@ class HomesTest extends TestCase
                                     "room_id" => "2539094912",
                                     "bridge" => "70:ee:50:23:d7:a8",
                                 ]
+                            ],
+                            "schedules" => [
+                                [
+                                    "id" => "123",
+                                    "name" => "My schedule",
+                                    "type" => "therm",
+                                    "default" => true,
+                                    "hg_temp" => 7,
+                                    "away_temp" => 12,
+                                    "timetable" => [
+                                        [
+                                            "m_offset" => 60,
+                                            "zone_id" => 1
+                                        ],
+                                        [
+                                            "m_offset" => 120,
+                                            "zone_id" => 2
+                                        ]
+                                    ],
+                                    "zones" => [
+                                        [
+                                            "id" => 1,
+                                            "type" => 0,
+                                            "name" => "My first zone",
+                                            "rooms" => [
+                                                [
+                                                    "id" => "2255031728",
+                                                    "therm_setpoint_temperature" => 15
+                                                ],
+                                                [
+                                                    "id" => "2539094912",
+                                                    "therm_setpoint_temperature" => 17
+                                                ]
+                                            ]
+                                        ],
+                                        [
+                                            "id" => 2,
+                                            "type" => 1,
+                                            "name" => "My second zone",
+                                            "rooms" => [
+                                                [
+                                                    "id" => "2255031728",
+                                                    "therm_setpoint_temperature" => 14
+                                                ],
+                                                [
+                                                    "id" => "2539094912",
+                                                    "therm_setpoint_temperature" => 16
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
                             ]
                         ]
                     ]
@@ -171,5 +223,86 @@ class HomesTest extends TestCase
         $this->assertEquals("Vanne Salon", $valve->getName());
         $this->assertEquals(1513260804, $valve->getInstallation()->getLastSetup());
         $this->assertEquals("70:ee:50:23:d7:a8", $valve->getBridge());
+
+        $schedules = $home->getSchedules();
+        $this->assertCount(1, $schedules);
+        $schedule = $schedules[0];
+        $this->assertInstanceOf(
+            Models\Schedules\EnergySchedule::class,
+            $schedule
+        );
+        $this->assertEquals("123", $schedule->getId());
+        $this->assertEquals("My schedule", $schedule->getName());
+        $this->assertTrue($schedule->isDefault());
+        $this->assertEquals(12, $schedule->getAwayTemperature());
+        $this->assertEquals(7, $schedule->getFrostguardTemperature());
+
+        $timetable = $schedule->getTimetable();
+        $this->assertCount(2, $timetable);
+        $entry = $timetable[0];
+        $this->assertInstanceOf(
+            Models\Schedules\Entry::class,
+            $entry
+        );
+        $this->assertEquals(60, $entry->getOffset());
+        $this->assertEquals(1, $entry->getZone());
+        $entry = $timetable[1];
+        $this->assertInstanceOf(
+            Models\Schedules\Entry::class,
+            $entry
+        );
+        $this->assertEquals(120, $entry->getOffset());
+        $this->assertEquals(2, $entry->getZone());
+
+        $zones = $schedule->getZones();
+        $this->assertCount(2, $zones);
+        $zone = $zones[0];
+        $this->assertInstanceOf(
+            Models\Schedules\Zone::class,
+            $zone
+        );
+        $this->assertEquals(1, $zone->getId());
+        $this->assertEquals(0, $zone->getType());
+        $this->assertEquals("My first zone", $zone->getName());
+        $rooms = $zone->getRooms();
+        $this->assertCount(2, $rooms);
+        $room = $rooms[0];
+        $this->assertInstanceOf(
+            Models\Schedules\Room::class,
+            $room
+        );
+        $this->assertEquals("2255031728", $room->getId());
+        $this->assertEquals(15, $room->getTemperature());
+        $room = $rooms[1];
+        $this->assertInstanceOf(
+            Models\Schedules\Room::class,
+            $room
+        );
+        $this->assertEquals("2539094912", $room->getId());
+        $this->assertEquals(17, $room->getTemperature());
+        $zone = $zones[1];
+        $this->assertInstanceOf(
+            Models\Schedules\Zone::class,
+            $zone
+        );
+        $this->assertEquals(2, $zone->getId());
+        $this->assertEquals(1, $zone->getType());
+        $this->assertEquals("My second zone", $zone->getName());
+        $rooms = $zone->getRooms();
+        $this->assertCount(2, $rooms);
+        $room = $rooms[0];
+        $this->assertInstanceOf(
+            Models\Schedules\Room::class,
+            $room
+        );
+        $this->assertEquals("2255031728", $room->getId());
+        $this->assertEquals(14, $room->getTemperature());
+        $room = $rooms[1];
+        $this->assertInstanceOf(
+            Models\Schedules\Room::class,
+            $room
+        );
+        $this->assertEquals("2539094912", $room->getId());
+        $this->assertEquals(16, $room->getTemperature());
     }
 }
