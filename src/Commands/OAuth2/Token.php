@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 
 use Netatmo\Sdk\Client;
 use Netatmo\Sdk\OAuth2;
+use Netatmo\Sdk\Config;
 use Netatmo\Sdk\Exceptions;
 
 class Token extends Command
@@ -26,9 +27,11 @@ class Token extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $config = OAuth2\Config::fromArray([
-            'client_id' => $input->getArgument('client_id'),
-            'client_secret' => $input->getArgument('client_secret'),
+        $config = Config::fromArray([
+            'oauth2' => [
+                'client_id' => $input->getArgument('client_id'),
+                'client_secret' => $input->getArgument('client_secret'),
+            ]
         ]);
         $client = new Client($config);
         $grant = new OAuth2\Grants\Password(

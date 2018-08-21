@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 
 use Netatmo\Sdk\Client;
 use Netatmo\Sdk\OAuth2;
+use Netatmo\Sdk\Config;
 use Netatmo\Sdk\Requests;
 use Netatmo\Sdk\Exceptions;
 
@@ -26,7 +27,12 @@ class Stations extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // configure client
-        $config = new OAuth2\Config(null, null);
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "",
+                "client_secret" => ""
+            ]
+        ]);
         $client = new Client($config);
         $token = new OAuth2\Token($input->getArgument("access_token"));
         $client->setAccessToken($token);

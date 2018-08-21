@@ -5,11 +5,11 @@ namespace Netatmo\Sdk;
 class Client
 {
     /**
-     * OAuth2 configuration
+     * Client configuration
      *
      * @var Netatmo\OAuth2\Config
      */
-    protected $oauth2Config = null;
+    protected $config = null;
 
     /**
      * @var Netatmo\Http\Client;
@@ -22,14 +22,8 @@ class Client
 
     protected $refreshToken = null;
 
-    public function __construct(
-        OAuth2\Config $oauth2Config,
-        Config $config = null
-    ) {
-        $this->oauth2Config = $oauth2Config;
-        if ($config === null) {
-            $config = new Config();
-        }
+    public function __construct(Config $config)
+    {
         $this->config = $config;
         $this->httpClient = new Http\GuzzleClient();
     }
@@ -73,10 +67,10 @@ class Client
 
     public function getTokens(OAuth2\Grants\Grant $grant)
     {
-        $body = $this->oauth2Config->getParams($grant);
+        $body = $this->config->getOAuth2()->getParams($grant);
         $body = Http\Body::withFormParams($body);
 
-        $uri = $this->oauth2Config->getTokenUri();
+        $uri = $this->config->getOAuth2()->getTokenUri();
 
         $request = $this->httpClient->getRequest(Http\Method::POST, $uri);
         $request = $request->withHeader(
@@ -132,6 +126,19 @@ class Client
         }
     }
 
+    public function buildQueryParams(array $params)
+    {
+        $query = [];
+        foreach ($params as $key => $value)
+        {
+            if (is_bool($value)) {
+                $value = $value ? "true" : "false";
+            }
+            $query[$key] = $value;
+        }
+        return http_build_query($query, null, "&");
+    }
+
     public function transfer(
         Requests\Request $request,
         Requests\Options $options = null
@@ -142,13 +149,13 @@ class Client
         // Build path
         $path = "{$this->config->getUri()}/";
         $path .= ($request->getMethod() === Http\Method::GET)
-            ? $request->getPath() . "?" . http_build_query($request->getParams(), null, "&")
+            ? $request->getPath() . "?" . $this->buildQueryParams($request->getParams())
             : $request->getPath();
 
         // Build HTTP request
         $httpRequest = $this->httpClient->getRequest(
             $request->getMethod(),
-            $request->getPath()
+            $path
         );
 
         // Set body it's a POST request

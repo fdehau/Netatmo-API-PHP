@@ -3,6 +3,7 @@
 namespace Netatmo\Sdk\Tests;
 
 use Netatmo\Sdk\Client;
+use Netatmo\Sdk\Config;
 use Netatmo\Sdk\Http;
 use Netatmo\Sdk\OAuth2;
 use Netatmo\Sdk\ErrorCode;
@@ -17,8 +18,13 @@ class ClientTest extends TestCase
      */
     public function testGetTokensFailWithNoBody()
     {
-        $oauth2Config = new OAuth2\Config("id", "secret");
-        $client = new Client($oauth2Config);
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
         $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\NoBody(400)
         ]);
@@ -32,8 +38,13 @@ class ClientTest extends TestCase
      */
     public function testGetTokensFailWithInvalidJson()
     {
-        $oauth2Config = new OAuth2\Config("id", "secret");
-        $client = new Client($oauth2Config);
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
         $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\Json(400, "{")
         ]);
@@ -47,8 +58,13 @@ class ClientTest extends TestCase
      */
     public function testGetTokensFailWithOAuth2Error()
     {
-        $oauth2Config = new OAuth2\Config("id", "secret");
-        $client = new Client($oauth2Config);
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
         $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\OAuth2\Error(400, "invalid_token")
         ]);
@@ -59,8 +75,13 @@ class ClientTest extends TestCase
 
     public function testGetTokensWithPassword()
     {
-        $oauth2Config = new OAuth2\Config("id", "secret");
-        $client = new Client($oauth2Config);
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
         $tokens = OAuth2\Tokens::fromArray([
             'access_token' => '000|access',
             'expires_in' => 3600,
@@ -78,8 +99,13 @@ class ClientTest extends TestCase
 
     public function testGetTokensWithAuthorizationCode()
     {
-        $oauth2Config = new OAuth2\Config("id", "secret");
-        $client = new Client($oauth2Config);
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
         $tokens = OAuth2\Tokens::fromArray([
             'access_token' => '000|access',
             'expires_in' => 3600,
@@ -101,8 +127,13 @@ class ClientTest extends TestCase
      */
     public function testThrowExceptionIfResponseHasNoBody()
     {
-        $oauth2Config = new OAuth2\Config("id", "secret");
-        $client = new Client($oauth2Config);
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
         $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\Json(400, "")
         ]);
@@ -119,8 +150,13 @@ class ClientTest extends TestCase
      */
     public function testThrowExceptionIfRequestFails()
     {
-        $oauth2Config = new OAuth2\Config("id", "secret");
-        $client = new Client($oauth2Config);
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
         $httpClient = new Fixtures\Http\Client([
             new Fixtures\Responses\Json(
                 400,
@@ -140,8 +176,13 @@ class ClientTest extends TestCase
 
     public function testRetryIfAccessTokenIsExpired()
     {
-        $oauth2Config = new OAuth2\Config("id", "secret");
-        $client = new Client($oauth2Config);
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
         $tokens = OAuth2\Tokens::fromArray([
             'access_token' => '111|access',
             'expires_in' => 3600,
@@ -183,8 +224,13 @@ class ClientTest extends TestCase
      */
     public function testRetryIfAccessTokenIsExpiredAndFailToGetNewAccessToken()
     {
-        $oauth2Config = new OAuth2\Config("id", "secret");
-        $client = new Client($oauth2Config);
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
         $tokens = OAuth2\Tokens::fromArray([
             'access_token' => '111|access',
             'expires_in' => 3600,
