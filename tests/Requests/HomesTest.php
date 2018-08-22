@@ -135,7 +135,10 @@ class HomesTest extends TestCase
                                         ]
                                     ]
                                 ]
-                            ]
+                            ],
+                            "therm_mode" => "schedule",
+                            "therm_mode_endtime" => 15000000,
+                            "therm_setpoint_default_duration" => 3600
                         ]
                     ]
                 ]
@@ -304,5 +307,20 @@ class HomesTest extends TestCase
         );
         $this->assertEquals("2539094912", $room->getId());
         $this->assertEquals(16, $room->getTemperature());
+
+        $thermostatSettings = $home->getThermostatSettings();
+        $this->assertInstanceOf(
+            Models\Energy\ThermostatSettings::class,
+            $thermostatSettings
+        );
+        $this->assertEquals(3600, $thermostatSettings->getSetpointDefaultDuration());
+
+        $thermostatMode = $home->getThermostatMode();
+        $this->assertInstanceOf(
+            Models\Energy\ThermostatMode::class,
+            $thermostatMode
+        );
+        $this->assertEquals("schedule", $thermostatMode->getMode());
+        $this->assertEquals(15000000, $thermostatMode->getEnd());
     }
 }

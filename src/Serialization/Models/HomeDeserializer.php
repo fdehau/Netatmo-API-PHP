@@ -13,6 +13,9 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
     const ROOMS = "rooms";
     const MODULES = "modules";
     const SCHEDULES = "schedules";
+    const THERMOSTAT_SETPOINT_DEFAULT_DURATION = "therm_setpoint_default_duration";
+    const THERMOSTAT_MODE = "therm_mode";
+    const THERMOSTAT_MODE_ENDTIME = "therm_mode_endtime";
 
     public function fromArray(array $array)
     {
@@ -58,6 +61,20 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
                 $home->addSchedule($schedule);
             }
         }
+
+        if (isset($array[self::THERMOSTAT_MODE])) {
+            $mode = new Models\Energy\ThermostatMode($array[self::THERMOSTAT_MODE]);
+            if (isset($array[self::THERMOSTAT_MODE_ENDTIME])) {
+                $mode->setEnd($array[self::THERMOSTAT_MODE_ENDTIME]);
+            }
+            $home->setThermostatMode($mode);
+        }
+
+        $thermostatSettings = new Models\Energy\ThermostatSettings();
+        if (isset($array[self::THERMOSTAT_SETPOINT_DEFAULT_DURATION])) {
+            $thermostatSettings->setSetpointDefaultDuration($array[self::THERMOSTAT_SETPOINT_DEFAULT_DURATION]);
+        }
+        $home->setThermostatSettings($thermostatSettings);
 
         return $home;
     }

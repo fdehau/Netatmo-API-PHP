@@ -10,6 +10,8 @@ class Home
     protected $rooms = [];
     protected $modules = [];
     protected $schedules = [];
+    protected $thermostatMode;
+    protected $thermostatSettings;
 
     public function __construct($id)
     {
@@ -46,6 +48,16 @@ class Home
         return $this->schedules;
     }
 
+    public function getThermostatMode()
+    {
+        return $this->thermostatMode;
+    }
+
+    public function getThermostatSettings()
+    {
+        return $this->thermostatSettings;
+    }
+
     public function setName($name)
     {
         $this->name = $name;
@@ -69,5 +81,15 @@ class Home
     public function addSchedule(Schedules\Schedule $schedule)
     {
         $this->schedules[] = $schedule;
+    }
+
+    public function setThermostatMode(Energy\ThermostatMode $mode)
+    {
+        $this->thermostatMode = $mode;
+    }
+
+    public function setThermostatSettings(Energy\ThermostatSettings $settings)
+    {
+        $this->thermostatSettings = $settings;
     }
 }
