@@ -7,7 +7,7 @@ use Netatmo\Sdk\Requests;
 use Netatmo\Sdk\Responses;
 use Netatmo\Sdk\Models;
 use Netatmo\Sdk\Tests\Fixtures;
-use PHPUnit\Framework\TestCase;
+use Netatmo\Sdk\Tests\TestCase;
 
 class HomesTest extends TestCase
 {
@@ -147,6 +147,25 @@ class HomesTest extends TestCase
         $request = Requests\Homes::getHome("1234")
             ->withGatewayTypes(["NAPlug"]);
         $response = $client->send($request);
+
+        // Check request
+        $this->assertRequest(
+            [
+                "params" => [
+                    "home_id" => "1234",
+                    "gateway_types" => [
+                        "NAPlug"
+                    ]
+                ],
+                "method" => "GET",
+                "headers" => [
+                    "authorization" => "Bearer {$client->getAccessToken()}"
+                ]
+            ],
+            $client->getHttpClient()->getRequests()[0]
+        );
+
+        // Check response
         $this->assertInstanceOf(
             Responses\Homes::class,
             $response

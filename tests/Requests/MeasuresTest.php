@@ -6,7 +6,7 @@ use Netatmo\Sdk\Client;
 use Netatmo\Sdk\Requests;
 use Netatmo\Sdk\Responses;
 use Netatmo\Sdk\Tests\Fixtures;
-use PHPUnit\Framework\TestCase;
+use Netatmo\Sdk\Tests\TestCase;
 
 class MeasuresTest extends TestCase
 {
@@ -47,6 +47,25 @@ class MeasuresTest extends TestCase
             ->withTypes(["Temperature", "humidity"])
             ->every("1hour");
         $response = $client->send($request);
+
+        // check request
+        $this->assertRequest(
+            [
+                "params" => [
+                    "device_id" => "70:ee:50:2c:70:ca",
+                    "type" => "Temperature,humidity",
+                    "scale" => "1hour",
+                    "optimize" => "true"
+                ],
+                "method" => "GET",
+                "headers" => [
+                    "authorization" => "Bearer {$client->getAccessToken()}"
+                ]
+            ],
+            $client->getHttpClient()->getRequests()[0]
+        );
+
+        // check response
         $this->assertTrue($response instanceof Responses\Measures);
         $this->assertEquals(
             [
@@ -92,6 +111,25 @@ class MeasuresTest extends TestCase
             ->every("1hour")
             ->withoutOptimization();
         $response = $client->send($request);
+
+        // check request
+        $this->assertRequest(
+            [
+                "params" => [
+                    "device_id" => "70:ee:50:2c:70:ca",
+                    "type" => "Temperature,humidity",
+                    "scale" => "1hour",
+                    "optimize" => "false"
+                ],
+                "method" => "GET",
+                "headers" => [
+                    "authorization" => "Bearer {$client->getAccessToken()}"
+                ]
+            ],
+            $client->getHttpClient()->getRequests()[0]
+        );
+
+        // check response
         $this->assertTrue($response instanceof Responses\Measures);
         $this->assertEquals(
             [

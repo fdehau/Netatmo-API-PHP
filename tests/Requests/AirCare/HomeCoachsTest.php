@@ -7,7 +7,7 @@ use Netatmo\Sdk\Requests;
 use Netatmo\Sdk\Responses;
 use Netatmo\Sdk\Models;
 use Netatmo\Sdk\Tests\Fixtures;
-use PHPUnit\Framework\TestCase;
+use Netatmo\Sdk\Tests\TestCase;
 
 class HomeCoachsTest extends TestCase
 {
@@ -70,6 +70,22 @@ class HomeCoachsTest extends TestCase
 
         $request = Requests\AirCare\HomeCoachs::getDevice("70:ee:50:2c:70:ca");
         $response = $client->send($request);
+
+        // check request
+        $this->assertRequest(
+            [
+                "params" => [
+                    "device_id" => "70:ee:50:2c:70:ca",
+                ],
+                "method" => "GET",
+                "headers" => [
+                    "authorization" => "Bearer {$client->getAccessToken()}"
+                ]
+            ],
+            $client->getHttpClient()->getRequests()[0]
+        );
+
+        // check response
         $this->assertInstanceOf(
             Responses\AirCare\HomeCoachs::class,
             $response

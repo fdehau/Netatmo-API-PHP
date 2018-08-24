@@ -7,7 +7,7 @@ use Netatmo\Sdk\Requests;
 use Netatmo\Sdk\Responses;
 use Netatmo\Sdk\Models;
 use Netatmo\Sdk\Tests\Fixtures;
-use PHPUnit\Framework\TestCase;
+use Netatmo\Sdk\Tests\TestCase;
 
 class StationsTest extends TestCase
 {
@@ -120,6 +120,23 @@ class StationsTest extends TestCase
         $request = Requests\Weather\Stations::getDevice("70:ee:50:2c:70:ca")
             ->includeFavorites();
         $response = $client->send($request);
+
+        // check request
+        $this->assertRequest(
+            [
+                "params" => [
+                    "device_id" => "70:ee:50:2c:70:ca",
+                    "get_favorites" => "true"
+                ],
+                "method" => "GET",
+                "headers" => [
+                    "authorization" => "Bearer {$client->getAccessToken()}"
+                ]
+            ],
+            $client->getHttpClient()->getRequests()[0]
+        );
+
+        // check response
         $this->assertInstanceOf(
             Responses\Weather\Stations::class,
             $response

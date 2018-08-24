@@ -45,6 +45,11 @@ class Client
         return $this->refreshToken;
     }
 
+    public function getHttpClient()
+    {
+        return $this->httpClient;
+    }
+
     public function setHttpClient(Http\Client $client)
     {
         $this->httpClient = $client;
@@ -160,7 +165,7 @@ class Client
 
         // Set body it's a POST request
         if ($request->getMethod() === Http\Method::POST) {
-            $body = Body::withJson($request->getParams());
+            $body = Http\Body::withJson($request->getParams());
             $httpRequest = $httpRequest->withBody($body);
             $httpRequest = $httpRequest->withHeader('Content-Type', 'application/json');
         }
