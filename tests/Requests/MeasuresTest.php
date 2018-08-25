@@ -5,6 +5,7 @@ namespace Netatmo\Sdk\Tests\Requests;
 use Netatmo\Sdk\Client;
 use Netatmo\Sdk\Requests;
 use Netatmo\Sdk\Responses;
+use Netatmo\Sdk\Parameters;
 use Netatmo\Sdk\Tests\Fixtures;
 use Netatmo\Sdk\Tests\TestCase;
 
@@ -43,19 +44,22 @@ class MeasuresTest extends TestCase
             )
         ]);
 
-        $request = Requests\Measures::ofDevice("70:ee:50:2c:70:ca")
-            ->withTypes(["Temperature", "humidity"])
-            ->every("1hour");
+        $measures = new Parameters\Measures(["Temperature", "humidity"], "1hour");
+        $request = Requests\Measures::ofDevice("70:ee:50:2c:70:ca", $measures);
         $response = $client->send($request);
 
         // check request
         $this->assertRequest(
             [
+                "uri" => [
+                    "path" => "/api/getmeasure"
+                ],
                 "params" => [
                     "device_id" => "70:ee:50:2c:70:ca",
                     "type" => "Temperature,humidity",
                     "scale" => "1hour",
-                    "optimize" => "true"
+                    "optimize" => "true",
+                    "real_time" => "false"
                 ],
                 "method" => "GET",
                 "headers" => [
@@ -106,10 +110,9 @@ class MeasuresTest extends TestCase
             )
         ]);
 
-        $request = Requests\Measures::ofDevice("70:ee:50:2c:70:ca")
-            ->withTypes(["Temperature", "humidity"])
-            ->every("1hour")
-            ->withoutOptimization();
+        $measures = new Parameters\Measures(["Temperature", "humidity"], "1hour");
+        $measures->disableOptimization();
+        $request = Requests\Measures::ofDevice("70:ee:50:2c:70:ca", $measures);
         $response = $client->send($request);
 
         // check request
@@ -119,7 +122,8 @@ class MeasuresTest extends TestCase
                     "device_id" => "70:ee:50:2c:70:ca",
                     "type" => "Temperature,humidity",
                     "scale" => "1hour",
-                    "optimize" => "false"
+                    "optimize" => "false",
+                    "real_time" => "false"
                 ],
                 "method" => "GET",
                 "headers" => [

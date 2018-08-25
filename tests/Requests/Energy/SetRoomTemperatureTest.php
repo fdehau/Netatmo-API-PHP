@@ -23,6 +23,9 @@ class SetRoomTemperatureTest extends TestCase
         // check request
         $this->assertRequest(
             [
+                "uri" => [
+                    "path" => "/api/setroomthermpoint"
+                ],
                 "params" => [
                     "home_id" => "1234",
                     "room_id" => "2345",
@@ -53,6 +56,9 @@ class SetRoomTemperatureTest extends TestCase
         // check request
         $this->assertRequest(
             [
+                "uri" => [
+                    "path" => "/api/setroomthermpoint"
+                ],
                 "params" => [
                     "home_id" => "1234",
                     "room_id" => "2345",

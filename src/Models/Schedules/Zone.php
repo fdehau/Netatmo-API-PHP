@@ -7,7 +7,7 @@ class Zone
     protected $id;
     protected $type;
     protected $name;
-    protected $rooms;
+    protected $rooms = [];
 
     public function __construct($id, $type)
     {

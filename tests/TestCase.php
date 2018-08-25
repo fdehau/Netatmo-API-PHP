@@ -8,7 +8,16 @@ use Psr\Http\Message\RequestInterface;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    public function assertRequest(array $expected, RequestInterface $request) {
+    public function assertRequest(array $expected, RequestInterface $request)
+    {
+        if (isset($expected["uri"])) {
+            if (isset($expected["uri"]["path"])) {
+                $this->assertEquals(
+                    $expected["uri"]["path"],
+                    $request->getUri()->getPath()
+                );
+            }
+        }
         if (isset($expected["method"])) {
             $this->assertEquals(
                 $expected["method"],

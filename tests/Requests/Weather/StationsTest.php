@@ -124,6 +124,9 @@ class StationsTest extends TestCase
         // check request
         $this->assertRequest(
             [
+                "uri" => [
+                    "path" => "/api/getstationsdata"
+                ],
                 "params" => [
                     "device_id" => "70:ee:50:2c:70:ca",
                     "get_favorites" => "true"

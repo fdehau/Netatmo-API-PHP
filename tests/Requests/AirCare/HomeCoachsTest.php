@@ -74,6 +74,9 @@ class HomeCoachsTest extends TestCase
         // check request
         $this->assertRequest(
             [
+                "uri" => [
+                    "path" => "/api/gethomecoachsdata"
+                ],
                 "params" => [
                     "device_id" => "70:ee:50:2c:70:ca",
                 ],

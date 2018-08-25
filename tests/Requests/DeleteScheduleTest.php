@@ -1,36 +1,35 @@
 <?php
 
-namespace Netatmo\Sdk\Tests\Requests\Energy;
+namespace Netatmo\Sdk\Tests\Requests;
 
 use Netatmo\Sdk\Client;
 use Netatmo\Sdk\Requests;
 use Netatmo\Sdk\Responses;
 use Netatmo\Sdk\Models;
 use Netatmo\Sdk\Tests\Fixtures;
-use Netatmo\Sdk\Http;
 use Netatmo\Sdk\Tests\TestCase;
 
-class SetThermostatModeTest extends TestCase
+class DeleteScheduleTest extends TestCase
 {
-    public function testSetModeSchedule()
+    public function testDeleteSchedule()
     {
         $client = Fixtures\Client::withResponses([
             new Fixtures\Responses\Ok([]),
         ]);
-        $request = new Requests\Energy\SetThermostatMode("1234", "schedule");
-        $request->setEnd(3600);
+        $schedule = new Models\Schedules\Schedule("2345", "1234");
+        $schedule->setName("My schedule");
+        $request = new Requests\DeleteSchedule($schedule);
         $response = $client->send($request);
 
         // Check request
         $this->assertRequest(
             [
                 "uri" => [
-                    "path" => "/api/setthermmode"
+                    "path" => "/api/deletehomeschedule"
                 ],
                 "params" => [
                     "home_id" => "1234",
-                    "mode" => "schedule",
-                    "endtime" => 3600
+                    "schedule_id" => "2345",
                 ],
                 "method" => "POST",
                 "headers" => [

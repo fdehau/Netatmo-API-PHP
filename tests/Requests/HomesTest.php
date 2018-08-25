@@ -151,6 +151,9 @@ class HomesTest extends TestCase
         // Check request
         $this->assertRequest(
             [
+                "uri" => [
+                    "path" => "/api/homesdata",
+                ],
                 "params" => [
                     "home_id" => "1234",
                     "gateway_types" => [

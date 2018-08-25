@@ -1,4 +1,4 @@
-IGNORE=src/Netatmo/,src/Clients,src/Objects,src/Handlers,src/Constants
+IGNORE=src/Netatmo/,src/Clients,src/Objects,src/Handlers,src/Constants,src/Exceptions/NASDKException.php,src/Exceptions/NAClientException.php
 
 .PHONY: install
 install:

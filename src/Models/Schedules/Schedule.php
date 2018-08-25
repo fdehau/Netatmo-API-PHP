@@ -5,19 +5,26 @@ namespace Netatmo\Sdk\Models\Schedules;
 class Schedule
 {
     protected $id;
+    protected $homeId;
     protected $name;
     protected $default;
     protected $timetable = [];
     protected $zones = [];
 
-    public function __construct($id)
+    public function __construct($id, $homeId)
     {
         $this->id = $id;
+        $this->homeId= $homeId;
     }
 
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getHomeId()
+    {
+        return $this->homeId;
     }
 
     public function getName()
@@ -63,5 +70,10 @@ class Schedule
     public function addZone(Zone $zone)
     {
         $this->zones[] = $zone;
+    }
+
+    public function hasName()
+    {
+        return !empty($this->name);
     }
 }

@@ -45,7 +45,7 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
                 if (!isset($module["type"])) {
                     throw new Exceptions\Error("Missing type");
                 }
-                $de = $this->getModuleDeserializerByType($module["type"]);
+                $de = $this->getModuleDeserializer($module["type"]);
                 $module = $de->fromArray($module);
                 $home->addModule($module);
             }
@@ -56,7 +56,7 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
                 if (!isset($schedule["type"])) {
                     throw new Exceptions\Error("Missing type");
                 }
-                $de = $this->getScheduleDeserializerByType($schedule["type"]);
+                $de = $this->getScheduleDeserializer($schedule["type"], $home->getId());
                 $schedule = $de->fromArray($schedule);
                 $home->addSchedule($schedule);
             }
@@ -79,7 +79,7 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
         return $home;
     }
 
-    public function getModuleDeserializerByType($type)
+    public function getModuleDeserializer($type)
     {
         switch ($type) {
             case "NAPlug":
@@ -93,11 +93,11 @@ class HomeDeserializer implements Serialization\ArrayDeserializer
         }
     }
 
-    public function getScheduleDeserializerByType($type)
+    public function getScheduleDeserializer($type, $homeId)
     {
         switch ($type) {
             case "therm":
-                return new Serialization\Models\Schedules\EnergyScheduleDeserializer();
+                return new Serialization\Models\Schedules\EnergyScheduleDeserializer($homeId);
             default:
                 return new Serialization\Models\Schedules\ScheduleDeserializer();
         }

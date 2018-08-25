@@ -5,140 +5,122 @@ namespace Netatmo\Sdk\Requests;
 use Netatmo\Sdk\Http;
 use Netatmo\Sdk\Exceptions;
 use Netatmo\Sdk\Serialization;
+use Netatmo\Sdk\Parameters;
 
 /**
- * ```php
- *  $request = Measures::ofDevice($deviceId)
- *      ->withTypes(['Temperature'])
- *      ->every('5min')
- *      ->from(3600)
- *      ->to(3600)
- *      ->limit(512)
- *      ->optimize()
- *      ->withoutTimeOffset();
- * ```
+ * Request to retrieve sensor(s) measure(s) from a device
  */
 class Measures implements Request
 {
-    public function __construct($deviceId, $moduleId = null)
-    {
+    /**
+     * Create a new request for measures of a device or one of its modules
+     *
+     * @param string $deviceId id of the device
+     * @param string $moduleId id of the module
+     * @param Parameters\Measures $measures options for the measures query
+     *
+     * @return Measures
+     */
+    protected function __construct(
+        $deviceId,
+        $moduleId,
+        Parameters\Measures $measures
+    ) {
         $this->deviceId = $deviceId;
         $this->moduleId = $moduleId;
-        $this->start = null;
-        $this->end = null;
-        $this->scale = null;
-        $this->limit = null;
-        $this->optimize = true;
-        $this->withTimeOffset = null;
+        $this->measures = $measures;
     }
 
-    public static function ofModule($deviceId, $moduleId)
-    {
-        return new self($deviceId, $moduleId);
+    /**
+     * Start building a request for measures of a device
+     *
+     * @param string $deviceId id of a device
+     *
+     * @return Measures
+     */
+    public static function ofDevice(
+        $deviceId,
+        Parameters\Measures $measures
+    ) {
+        return new self($deviceId, null, $measures);
     }
 
-    public static function ofDevice($deviceId)
-    {
-        return new self($deviceId);
+    /**
+     * Start building a request for measures of a module
+     *
+     * @param string $deviceId id of the main device to which the module is linked
+     * @param string $moduleId id of the module
+     *
+     * @return Measures
+     */
+    public static function ofModule(
+        Parameters\Module $module,
+        Parameters\Measures $measures
+    ) {
+        return new self(
+            $module->getDeviceId(),
+            $module->getId(),
+            $measures
+        );
     }
 
-    public function withTypes(array $types)
-    {
-        $this->types = $types;
-        return $this;
-    }
-
-    public function from($start)
-    {
-        $this->start = $start;
-        return $this;
-    }
-
-    public function to($end)
-    {
-        $this->end = $end;
-        return $this;
-    }
-
-    public function every($scale)
-    {
-        $this->scale = $scale;
-        return $this;
-    }
-
-    public function limit($limit)
-    {
-        $this->limit = $limit;
-        return $this;
-    }
-
-    public function withoutOptimization()
-    {
-        $this->optimize = false;
-        return $this;
-    }
-
-    public function withoutTimeOffset()
-    {
-        $this->withTimeOffset = false;
-        return $this;
-    }
-
+    /**
+     * @inheritDoc
+     */
     public function getPath()
     {
         return "api/getmeasure";
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getMethod()
     {
         return Http\Method::GET;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getParams()
     {
-        if ($this->scale === null) {
-            throw new Exceptions\Error(
-                "missing scale on Measures request, look at the documentation"
-                . " of Measures::every for more explanations"
-            );
-        }
-        if (empty($this->types)) {
-            throw new Exceptions\Error(
-                "missing types on Measures request, look at the documentation"
-                . "of Measures::withTypes for more explanations"
-            );
-        }
         $params = [
             "device_id" => $this->deviceId,
-            "scale" => $this->scale,
-            "type" => join(",", $this->types)
+            "scale" => $this->measures->getScale(),
+            "type" => implode(",", $this->measures->getTypes()),
+            "optimize" => $this->measures->isOptimized(),
+            "real_time" => !$this->measures->shouldKeepOffset(),
         ];
         if ($this->moduleId !== null) {
             $params["module_id"] = $this->moduleId;
         }
-        if ($this->start !== null) {
-            $params["start"] = $this->start;
+        if ($this->measures->hasStart()) {
+            $params["start"] = $this->measures->getStart();
         }
-        if ($this->end !== null) {
-            $params["end"] = $this->end;
+        if ($this->measures->hasEnd()) {
+            $params["end"] = $this->measures->getEnd();
         }
-        if ($this->optimize !== null) {
-            $params["optimize"] = $this->optimize;
-        }
-        if ($this->withTimeOffset !== null) {
-            $params["real_time"] = $this->withTimeOffset;
+        if ($this->measures->hasLimit()) {
+            $params["limit"] = $this->measures->getLimit();
         }
         return $params;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getResponseDeserializer()
     {
         return new Serialization\Responses\MeasuresDeserializer(
-            $this->optimize,
-            $this->types
+            $this->measures->isOptimized(),
+            $this->measures->getTypes()
         );
     }
 
+    /**
+     * @inheritDoc
+     */
     public function withAuthorization()
     {
         return true;

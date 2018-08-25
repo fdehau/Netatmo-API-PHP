@@ -14,6 +14,11 @@ abstract class ScheduleDeserializer implements Serialization\ArrayDeserializer
     const ZONES = "zones";
     const TIMETABLE = "timetable";
 
+    public function __construct($homeId)
+    {
+        $this->homeId = $homeId;
+    }
+
     abstract public function getScheduleClass();
     abstract public function getRoomDeserializer();
 
@@ -23,7 +28,7 @@ abstract class ScheduleDeserializer implements Serialization\ArrayDeserializer
             throw new Exceptions\Error("Missing id");
         }
         $class = $this->getScheduleClass();
-        $schedule = new $class($array[self::ID]);
+        $schedule = new $class($array[self::ID], $this->homeId);
 
         if (isset($array[self::NAME])) {
             $schedule->setName($array[self::NAME]);

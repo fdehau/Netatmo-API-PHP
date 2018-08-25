@@ -2,17 +2,22 @@
 
 namespace Netatmo\Sdk;
 
+use Netatmo\Sdk\OAuth2;
+use Netatmo\Sdk\Http;
+
 class Client
 {
     /**
      * Client configuration
      *
-     * @var Netatmo\OAuth2\Config
+     * @var OAuth2\Config
      */
     protected $config = null;
 
     /**
-     * @var Netatmo\Http\Client;
+     * HTTP client
+     *
+     * @var Http\Client;
      */
     protected $httpClient = null;
 
@@ -134,8 +139,7 @@ class Client
     public function buildQueryParams(array $params)
     {
         $query = [];
-        foreach ($params as $key => $value)
-        {
+        foreach ($params as $key => $value) {
             if (is_bool($value)) {
                 $value = $value ? "true" : "false";
             }
