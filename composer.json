@@ -3,7 +3,9 @@
     "description": "Netatmo PHP SDK",
     "keywords": [
         "netatmo",
-        "api"
+        "api",
+        "iot",
+        "home automation"
     ],
     "license": "MIT",
     "require": {

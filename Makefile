@@ -27,3 +27,11 @@ fmt:
 .PHONY: clean
 clean:
 	@rm -rf ./vendor
+
+.PHONY: docs
+docs:
+	@make -C docs html
+
+.PHONY: watch-docs
+watch-docs:
+	@watchman-make -p 'docs/**/*.rst' 'docs/**/*.py' -t docs
