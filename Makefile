@@ -16,6 +16,13 @@ endif
 test:
 	@./vendor/bin/phpunit $(PHPUNIT_OPTIONS)
 
+COVERAGE_DIR = coverage
+.PHONY: cov
+cov: PHPUNIT_OPTIONS += --coverage-html $(COVERAGE_DIR)
+cov:
+	@rm -rf $(COVERAGE_DIR)
+	@./vendor/bin/phpunit $(PHPUNIT_OPTIONS)
+
 .PHONY: lint
 lint:
 	@./vendor/bin/phpcs --ignore=$(IGNORE) src/ tests/
@@ -26,7 +33,7 @@ fmt:
 
 .PHONY: clean
 clean:
-	@rm -rf ./vendor
+	@rm -rf ./vendor $(COVERAGE_DIR)
 
 .PHONY: docs
 docs:
