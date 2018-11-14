@@ -131,7 +131,8 @@ class Client
         }
 
         // If the token is already expired, attempt to refresh it first
-        if ($this->accessToken->isExpired() &&
+        if ($this->accessToken !== null &&
+            $this->accessToken->isExpired() &&
             $this->refreshToken !== null) {
             $this->refreshTokens();
         }
@@ -189,7 +190,7 @@ class Client
 
         if ($request->withAuthorization()) {
             if ($this->accessToken === null) {
-                throw Exceptions\Error("attempting to send a request without an access token");
+                throw new Exceptions\Error("attempting to send a request without an access token");
             }
             $httpRequest = $httpRequest->withHeader("Authorization", "Bearer {$this->accessToken}");
         }

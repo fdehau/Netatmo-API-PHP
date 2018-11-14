@@ -123,6 +123,23 @@ class ClientTest extends TestCase
 
     /**
      * @expectedException \Netatmo\Sdk\Exceptions\Error
+     * @expectedExceptionMessage attempting to send a request without an access token
+     */
+    public function testThrowExceptionIfRequestNeedsAuthorization()
+    {
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
+        $request = Requests\Weather\Stations::getDevice("70:ee:50:2c:70:ca");
+        $client->send($request);
+    }
+
+    /**
+     * @expectedException \Netatmo\Sdk\Exceptions\Error
      * @expectedExceptionMessage invalid json
      */
     public function testThrowExceptionIfResponseHasNoBody()
