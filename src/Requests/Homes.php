@@ -6,12 +6,6 @@ use Netatmo\Sdk\Http;
 use Netatmo\Sdk\Exceptions;
 use Netatmo\Sdk\Serialization;
 
-/**
- * ```php
- *  $request = Homes::getHome($homeId)
- *      ->withGatewayTypes(['NAPlug']);
- * ```
- */
 class Homes implements Request
 {
     protected $homeId;
@@ -61,7 +55,7 @@ class Homes implements Request
 
     public function getResponseDeserializer()
     {
-        return new Serialization\Responses\HomesDeserializer();
+        return null;
     }
 
     public function withAuthorization()

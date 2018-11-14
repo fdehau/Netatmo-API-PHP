@@ -40,6 +40,9 @@ class DeleteScheduleTest extends TestCase
         );
 
         // Check response
-        $this->assertNull($response);
+        $this->assertInstanceOf(
+            Responses\Response::class,
+            $response
+        );
     }
 }

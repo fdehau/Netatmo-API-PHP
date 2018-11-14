@@ -114,6 +114,14 @@ class Client
         }
     }
 
+    private function refreshTokens()
+    {
+        $grant = new OAuth2\Grants\RefreshToken($this->refreshToken);
+        $tokens = $this->getTokens($grant);
+        $this->setAccessToken($tokens->getAccessToken());
+        $this->setRefreshToken($tokens->getRefreshToken());
+    }
+
     public function send(
         Requests\Request $request,
         Requests\Options $options = null
@@ -121,16 +129,21 @@ class Client
         if ($options === null) {
             $options = new Requests\Options();
         }
+
+        // If the token is already expired, attempt to refresh it first
+        if ($this->accessToken->isExpired() &&
+            $this->refreshToken !== null) {
+            $this->refreshTokens();
+        }
+
+        // Proceed with the request
         try {
             return $this->transfer($request, $options);
         } catch (Exceptions\ApiError $ex) {
             if ($ex->getCode() === ErrorCode::ACCESS_TOKEN_EXPIRED &&
                 $this->refreshToken !== null) {
-                $grant = new OAuth2\Grants\RefreshToken($this->refreshToken);
-                $tokens = $this->getTokens($grant);
-                $this->setAccessToken($tokens->getAccessToken());
-                $this->setRefreshToken($tokens->getRefreshToken());
-                return $this->transfer($request);
+                $this->refreshTokens();
+                return $this->transfer($request, $options);
             }
             throw $ex;
         }

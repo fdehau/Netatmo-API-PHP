@@ -90,68 +90,8 @@ class HomeCoachsTest extends TestCase
 
         // check response
         $this->assertInstanceOf(
-            Responses\AirCare\HomeCoachs::class,
+            Responses\Response::class,
             $response
         );
-
-        // Check user
-        $user = $response->getUser();
-        $this->assertEquals("florian@netatmo.com", $user->getEmail());
-        $administrative = $user->getAdministrative();
-        $this->assertEquals("fr-FR", $administrative->getLang());
-        $this->assertEquals("fr-FR", $administrative->getLocale());
-        $this->assertEquals("FR", $administrative->getCountry());
-        $this->assertEquals(1, $administrative->getUnit());
-        $this->assertEquals(1, $administrative->getWindUnit());
-        $this->assertEquals(1, $administrative->getPressureUnit());
-
-        $homeCoachs = $response->getHomeCoachs();
-        $this->assertCount(1, $homeCoachs);
-
-        $homeCoach = $homeCoachs[0];
-        $this->assertEquals("70:ee:50:2c:70:ca", $homeCoach->getId());
-        $this->assertEquals(3600, $homeCoach->getLastStatusTimestamp());
-        $this->assertEquals("Indoor", $homeCoach->getName());
-
-        $installation = $homeCoach->getInstallation();
-        $this->assertNotNull($installation);
-        $this->assertEquals(1200, $installation->getFirstSetup());
-        $this->assertEquals(1800, $installation->getLastSetup());
-
-        $firmware = $homeCoach->getFirmware();
-        $this->assertNotNull($firmware);
-        $this->assertEquals(100, $firmware->getVersion());
-        $this->assertEquals(2000, $firmware->getLastUpdate());
-
-        $this->assertEquals(70, $homeCoach->getWifiSignalQuality());
-        $this->assertEquals(
-            ["Temperature", "Humidity"],
-            $homeCoach->getMeasureTypes()
-        );
-
-        // Check place
-        $place = $homeCoach->getPlace();
-        $this->assertEquals(2.23, $place->getLongitude());
-        $this->assertEquals(48.88, $place->getLatitude());
-        $this->assertEquals(20, $place->getAltitude());
-        $this->assertEquals("FR", $place->getCountry());
-        $this->assertEquals("Paris", $place->getCity());
-        $this->assertEquals("Europe/Paris", $place->getTimezone());
-
-        // Check measures
-        $measures = $homeCoach->getMeasures();
-        $this->assertInstanceOf(
-            Models\AirCare\Measures::class,
-            $measures
-        );
-        $this->assertEquals(15000, $measures->getTimestamp());
-        $this->assertEquals(23, $measures->getTemperature());
-        $this->assertEquals(42, $measures->getHumidity());
-        $this->assertEquals(33, $measures->getMaxTemperature()->getValue());
-        $this->assertEquals(8000, $measures->getMaxTemperature()->getTimestamp());
-        $this->assertEquals(23, $measures->getMinTemperature()->getValue());
-        $this->assertEquals(7000, $measures->getMinTemperature()->getTimestamp());
-        $this->assertEquals(1000, $measures->getCo2());
-        $this->assertEquals(53, $measures->getNoise());
     }
 }

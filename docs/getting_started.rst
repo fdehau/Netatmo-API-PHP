@@ -109,18 +109,17 @@ Your first request
 The client can send any request that implements the ``Netatmo\Requests\Request``
 interface.
 
-The response is an instance of ``Netatmo\Responses\Response`` that is specific
-to the request.
+The response is an instance of ``Netatmo\Responses\Response``.
 
 .. code-block:: php
 
   use Netatmo\Sdk\Requests;
 
   $request = Requests\Weather\Stations::getDevice("70:ee:50:2c:70:ca");
-  // $response is an instance of Netatmo\Responses\Weather\Stations
+  // $response is an instance of Netatmo\Responses\Response
   $response = $client->send($request);
+  $body = $response->getBody();
 
-By default, the request is automatically deserialized into a dedicated PHP class.
 If you wish to receive the raw response as a PHP array you may use the ``$options``
 parameter.
 

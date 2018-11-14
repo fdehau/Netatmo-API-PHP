@@ -10,7 +10,9 @@ class Ok extends Json
             200,
             [
                 'status' => 'ok',
-                'body' => $body
+                'body' => $body,
+                'time_server' => time(),
+                'time_exec' => 0.2
             ]
         );
     }

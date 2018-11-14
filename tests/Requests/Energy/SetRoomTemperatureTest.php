@@ -41,7 +41,10 @@ class SetRoomTemperatureTest extends TestCase
         );
 
         // check response
-        $this->assertNull($response);
+        $this->assertInstanceOf(
+            Responses\Response::class,
+            $response
+        );
     }
 
     public function testSetTemperature()
@@ -75,6 +78,9 @@ class SetRoomTemperatureTest extends TestCase
         );
 
         // check response
-        $this->assertNull($response);
+        $this->assertInstanceOf(
+            Responses\Response::class,
+            $response
+        );
     }
 }

@@ -44,6 +44,6 @@ class RenameSchedule implements Requests\Request
 
     public function getResponseDeserializer()
     {
-        return new Serialization\Responses\EmptyDeserializer();
+        return new Serialization\Responses\BaseDeserializer();
     }
 }

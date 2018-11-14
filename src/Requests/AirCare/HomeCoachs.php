@@ -45,7 +45,7 @@ class HomeCoachs implements Requests\Request
 
     public function getResponseDeserializer()
     {
-        return new Serialization\Responses\AirCare\HomeCoachsDeserializer();
+        return new Serialization\Responses\BaseDeserializer();
     }
 
     public function withAuthorization()

@@ -8,19 +8,12 @@ use Netatmo\Sdk\Exceptions;
 use Netatmo\Sdk\Serialization;
 use Netatmo\Sdk\Requests;
 
-/**
- * ```php
- * $request = Stations::getDevice($deviceId)
- *      ->includeFavorites();
- * ```php
- */
-
 class Stations implements Requests\Request
 {
     public function __construct($deviceId)
     {
         $this->deviceId = $deviceId;
-        $this->includeFavorites = false;
+        $this->includeFavorites = null;
     }
 
     public static function getDevice($deviceId)
@@ -28,9 +21,9 @@ class Stations implements Requests\Request
         return new self($deviceId);
     }
 
-    public function includeFavorites()
+    public function includeFavorites($bool)
     {
-        $this->includeFavorites = true;
+        $this->includeFavorites = $bool;
         return $this;
     }
 
@@ -46,15 +39,20 @@ class Stations implements Requests\Request
 
     public function getParams()
     {
-        return [
-            "device_id" => $this->deviceId,
-            "get_favorites" => $this->includeFavorites
+        $params = [
+            "device_id" => $this->deviceId
         ];
+
+        if (!is_null($this->includeFavorites)) {
+            $params["get_favorites"] = $this->includeFavorites;
+        }
+
+        return $params;
     }
 
     public function getResponseDeserializer()
     {
-        return new Serialization\Responses\Weather\StationsDeserializer();
+        return null;
     }
 
     public function withAuthorization()
