@@ -73,6 +73,27 @@ class ClientTest extends TestCase
         $res = $client->getTokens($grant);
     }
 
+    /**
+     * @expectedException \Netatmo\Sdk\Exceptions\OAuth2Error
+     * @expectedExceptionMessage Missing parameter or invalid grant_type
+     */
+    public function testGetTokensFailWithOAuth2ErrorAndDescription()
+    {
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
+        $httpClient = new Fixtures\Http\Client([
+            new Fixtures\Responses\OAuth2\Error(400, "invalid_request", "Missing parameter or invalid grant_type")
+        ]);
+        $client->setHttpClient($httpClient);
+        $grant = new OAuth2\Grants\Password("user@access.com", "password");
+        $res = $client->getTokens($grant);
+    }
+
     public function testGetTokensWithPassword()
     {
         $config = Config::fromArray([
@@ -119,6 +140,41 @@ class ClientTest extends TestCase
         $grant = new OAuth2\Grants\AuthorizationCode("000");
         $res = $client->getTokens($grant);
         $this->assertEquals($tokens, $res);
+    }
+
+    public function testCanChangeTokens()
+    {
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
+        $tokens = OAuth2\Tokens::fromArray([
+            'access_token' => '000|access',
+            'expires_in' => 3600,
+            'refresh_token' => '000|refresh',
+            'scope' => 'read_thermostat write_thermostat',
+        ]);
+        $client->setAccessToken($tokens->getAccessToken());
+        $this->assertEquals('000|access', (string) $client->getAccessToken());
+        $client->setRefreshToken($tokens->getRefreshToken());
+        $this->assertEquals('000|refresh', (string) $client->getRefreshToken());
+    }
+
+    public function testCanSetHttpOptions()
+    {
+        $config = Config::fromArray([
+            "oauth2" => [
+                "client_id" => "id",
+                "client_secret" => "secret"
+            ]
+        ]);
+        $client = new Client($config);
+        $options = new Http\Options();
+        $options->setTimeout(1);
+        $client->setHttpOptions($options);
     }
 
     /**

@@ -6,11 +6,14 @@ use Netatmo\Sdk\Tests\Fixtures\Responses;
 
 class Error extends Responses\Json
 {
-    public function __construct($status, $error)
+    public function __construct($status, $error, $description = "")
     {
         $body = [
-            'error' => $error
+            'error' => $error,
         ];
+        if (!empty($description)) {
+            $body['error_description'] = $description;
+        }
         parent::__construct($status, $body);
     }
 }
