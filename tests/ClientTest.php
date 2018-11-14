@@ -190,6 +190,7 @@ class ClientTest extends TestCase
             'scope' => 'read_thermostat write_thermostat',
         ]);
         $httpClient = new Fixtures\Http\Client([
+            Fixtures\Responses\OAuth2\Tokens::fromTokens($tokens),
             new Fixtures\Responses\Json(
                 400,
                 [
